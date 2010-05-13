@@ -1,0 +1,11 @@
+[alias]
+	co = checkout
+	ci = commit
+[color]
+	ui = auto
+[core]
+	excludesfile = ~/.gitignore
+	autocrlf = input
+[user]
+	name = Beau Dacious
+	email = dacious.beau@gmail.com
