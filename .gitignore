@@ -1,0 +1,12 @@
+# Emacs autosaves
+.\#*
+\#*\#
+*~
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# Komodo
+*.kpf
