@@ -49,9 +49,16 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Set __git_ps1 environment variables
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\n${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h\[\033[00m\]:`__git_ps1 "\[\033[01;36m\]%s\[\033[00m\]:"`\[\033[01;37m\]\w\[\033[00m\]\n\$ '
 else
+    # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
@@ -59,7 +66,8 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1='\n${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h\[\033[00m\]:`__git_ps1 "\[\033[01;36m\]%s\[\033[00m\]:"`\[\033[01;37m\]\w\[\033[00m\]\n\$ '
     ;;
 *)
     ;;
