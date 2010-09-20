@@ -108,3 +108,8 @@ fi
 
 # This loads RVM into a shell session.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+# Start a Synergy+ server if a config file exists
+if [ -f "$HOME/.synergy.conf" ]; then
+    synergys -c $HOME/.synergy.conf
+fi
