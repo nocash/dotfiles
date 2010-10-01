@@ -2,6 +2,7 @@
 	co = checkout
 	ci = commit
 	cp = cherry-pick
+	st = status
 [color]
 	ui = auto
 [core]
@@ -9,6 +10,11 @@
 	autocrlf = input
 	editor = vim
 	eol = lf
+[merge]
+	tool = vimdiff
 [user]
 	name = Beau Dacious
 	email = dacious.beau@gmail.com
+[github]
+	user = nocash
+	token =
