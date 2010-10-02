@@ -107,6 +107,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+if [ -f "$HOME/.xmodmaprc" ]; then
+    xmodmap $HOME/.xmodmaprc
+fi
 
 # Start a Synergy+ server if a config file exists
 if [ -f "$HOME/.synergy.conf" ]; then
