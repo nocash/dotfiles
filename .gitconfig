@@ -3,6 +3,9 @@
 	ci = commit
 	cp = cherry-pick
 	st = status
+	d = diff
+	l = log
+	re = rebase
 [color]
 	ui = auto
 [core]
