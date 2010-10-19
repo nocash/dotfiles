@@ -10,3 +10,6 @@
 
 # Komodo
 *.kpf
+
+# ctags
+tags
