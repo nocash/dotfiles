@@ -1,4 +1,4 @@
-alias g='gvim --remote-silent'
+alias g='gvim --remote-tab-silent'
 alias v='vim'
 
 alias screen='byobu'
