@@ -20,3 +20,8 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# apply custom key bindings
+if [ -f "$HOME/.xmodmaprc" ]; then
+  xmodmap "$HOME/.xmodmaprc"
+fi
