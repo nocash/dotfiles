@@ -12,7 +12,7 @@
 	ui = auto
 [core]
 	excludesfile = ~/.gitignore
-	autocrlf = input
+	autocrlf = false
 	editor = vim
 	eol = lf
 [merge]
