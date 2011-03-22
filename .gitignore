@@ -1,15 +1,9 @@
-# Emacs autosaves
-.\#*
-\#*\#
-*~
-
-# Eclipse
-.buildpath
-.project
-.settings
-
-# Komodo
-*.kpf
-
-# ctags
-tags
+.\#*       # emacs autosave
+\#*\#      # emacs autosave
+*~         # emacs autosave
+.buildpath # eclipse project file
+.project   # eclipse project file
+.settings  # eclipse project file
+*.kpf      # komodo project file
+tags       # ctags
+Thumbs.db  # windows image cache
