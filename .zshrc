@@ -31,6 +31,9 @@ export PATH="$HOME/.my/bin:$PATH"
 
 export WORDCHARS='-._'
 
+# Check PATH for hub ('=hub') and wrap git if it's available.
+if ( which hub &>/dev/null ) { function git(){hub "$@"} }
+
 # This loads RVM into a shell session.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
