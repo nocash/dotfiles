@@ -25,6 +25,12 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct
 unsetopt correct_all
 
+setopt glob_complete
+
+export PATH="$HOME/.my/bin:$PATH"
+
+export WORDCHARS='-._'
+
 # This loads RVM into a shell session.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
