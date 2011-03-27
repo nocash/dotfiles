@@ -27,7 +27,7 @@ unsetopt correct_all
 
 setopt glob_complete
 
-export PATH="$HOME/.my/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 export WORDCHARS='-._'
 
