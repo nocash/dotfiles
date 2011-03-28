@@ -37,3 +37,6 @@ if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 # This loads RVM into a shell session.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+
+# Include machine-specifc shell configuration
+[[ -s "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
