@@ -38,5 +38,8 @@ if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
 
+# https://github.com/joelthelion/autojump
+[[ -s "/etc/profile.d/autojump.zsh" ]] && . /etc/profile.d/autojump.zsh
+
 # Include machine-specifc shell configuration
 [[ -s "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
