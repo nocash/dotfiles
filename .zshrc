@@ -26,6 +26,7 @@ unsetopt correct
 unsetopt correct_all
 
 setopt glob_complete
+setopt nobeep
 
 export PATH="$HOME/bin:$PATH"
 
