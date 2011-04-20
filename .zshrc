@@ -25,14 +25,16 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct
 unsetopt correct_all
 
-setopt glob_complete
+#setopt glob_complete
 setopt nobeep
 
 export PATH="$HOME/bin:$PATH"
-
 export WORDCHARS='-._'
+export EDITOR='vim'
 
-# Check PATH for hub ('=hub') and wrap git if it's available.
+alias gv='gvim --remote-tab-silent'
+
+# Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
 # This loads RVM into a shell session.
