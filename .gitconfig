@@ -8,6 +8,7 @@
 	ll = log --graph --relative-date  --pretty=format:'%C(yellow)%h%Creset %C(blue)%d%Creset %s %C(black)(%cd by %cn)%Creset' --all
 	fa = fetch --all
 	mirror = push mirror --mirror
+	fix = commit --amend -C HEAD
 [color]
 	ui = auto
 [core]
