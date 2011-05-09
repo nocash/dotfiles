@@ -9,6 +9,7 @@
 	fa = fetch --all
 	mirror = push mirror --mirror
 	fix = commit --amend -C HEAD
+	br = branch
 [color]
 	ui = auto
 [core]
