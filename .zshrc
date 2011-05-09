@@ -100,7 +100,13 @@ export PATH="$HOME/bin:$PATH"
 export WORDCHARS='-A-Za-z0-9,./?%&#:_=+@~' # from gnome-terminal defaults
 export EDITOR='vim'
 
+alias g='git'
 alias gv='gvim --remote-tab-silent'
+alias tree='tree -C'
+alias less='less -R'
+
+# Use htop instead of top if available
+if ( which htop &>/dev/null ) { alias top=htop }
 
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
