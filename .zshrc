@@ -101,7 +101,7 @@ export WORDCHARS='-A-Za-z0-9,./?%&#:_=+@~' # from gnome-terminal defaults
 export EDITOR='vim'
 
 alias g='git'
-alias gv='gvim --remote-tab-silent'
+alias gv='gvim --remote-silent'
 alias tree='tree -C'
 alias less='less -R'
 
