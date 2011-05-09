@@ -97,7 +97,7 @@ if [ -z "$SCREEN_COLORS" ] ; then
 fi # end of terminal detection
 
 export PATH="$HOME/bin:$PATH"
-export WORDCHARS='-._'
+export WORDCHARS='-A-Za-z0-9,./?%&#:_=+@~' # from gnome-terminal defaults
 export EDITOR='vim'
 
 alias gv='gvim --remote-tab-silent'
