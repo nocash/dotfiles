@@ -102,8 +102,9 @@ export EDITOR='vim'
 
 alias g='git'
 alias gv='gvim --remote-silent'
-alias tree='tree -C'
-alias less='less -R'
+alias screen='byobu'
+alias tree='tree -C | less -R'
+alias v='vim'
 
 # Use htop instead of top if available
 if ( which htop &>/dev/null ) { alias top=htop }
