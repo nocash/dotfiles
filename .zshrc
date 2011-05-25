@@ -103,6 +103,7 @@ export EDITOR='vim'
 alias g='git'
 alias gv='gvim --remote-silent'
 alias screen='byobu'
+alias se='sudoedit'
 alias tree='tree -C | less -R'
 alias v='vim'
 
