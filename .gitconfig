@@ -7,7 +7,7 @@
 	l = log --graph --relative-date  --pretty=format:'%C(yellow)%h%Creset %C(blue)%d%Creset %s %C(black)(%cd by %cn)%Creset'
 	ll = log --graph --relative-date  --pretty=format:'%C(yellow)%h%Creset %C(blue)%d%Creset %s %C(black)(%cd by %cn)%Creset' --all
 	fa = fetch --all
-	mirror = push mirror --mirror
+	mirror = "!for r in $( git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }' ); do git push $r; done"
 	fix = commit --amend -C HEAD
 	br = branch
 [color]
