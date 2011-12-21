@@ -1,24 +1,24 @@
 [alias]
-	co = checkout
+	br = branch
 	ci = commit
+	co = checkout
 	cp = cherry-pick
-	st = status
 	d = diff
+	fa = fetch --all
+	fix = commit --amend -C HEAD
 	l = log --graph --relative-date  --pretty=format:'%C(yellow)%h%Creset %C(blue)%d%Creset %s %C(black)(%cd by %cn)%Creset'
 	ll = !git l --all
-	fa = fetch --all
 	lll = !git fa && git ll
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
-	fix = commit --amend -C HEAD
-	br = branch
+	st = status
 [color]
 	ui = auto
 [core]
-	excludesfile = ~/.gitignore
 	autocrlf = false
 	editor = vim
 	eol = lf
+	excludesfile = ~/.gitignore
 [merge]
 	tool = vimdiff
 [user]
