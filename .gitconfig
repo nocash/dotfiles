@@ -19,8 +19,17 @@
 	editor = vim
 	eol = lf
 	excludesfile = ~/.gitignore
+[diff]
+	tool = vimdiff
+	guitool = gvimdiff
+[difftool]
+	prompt = false
 [merge]
 	tool = vimdiff
+	guitool = gvimdiff
+[mergetool]
+	keepbackup = false
+	prompt = false
 [user]
 	name = Beau Dacious
 	email = dacious.beau@gmail.com
