@@ -100,12 +100,10 @@ export PATH="$HOME/bin:$PATH"
 export WORDCHARS='-A-Za-z0-9,./?%&#:_=+@~' # from gnome-terminal defaults
 export EDITOR='vim'
 
-alias g='git'
 alias gv='gvim --remote-silent'
 alias screen='byobu'
 alias se='sudoedit'
 alias tree='tree -C | less -R'
-alias v='vim'
 
 # Use htop instead of top if available
 if ( which htop &>/dev/null ) { alias top=htop }
