@@ -6,7 +6,7 @@
 	d = diff
 	fa = fetch --all
 	fix = commit --amend -C HEAD
-	l = log --graph --relative-date  --pretty=format:'%C(yellow)%h%Creset %C(blue)%d%Creset %s %C(black)(%cd by %cn)%Creset'
+	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(%ar by %an)%Creset'
 	ll = !git l --all
 	lll = !git fa && git ll
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
