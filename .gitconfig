@@ -13,6 +13,7 @@
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	st = status
+	autosquash = rebase -i --autosquash
 [color]
 	ui = auto
 [core]
