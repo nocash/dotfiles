@@ -1,5 +1,6 @@
 [alias]
 	br = branch
+	cb = "!git branch 2>/dev/null | awk '/^\\* / { print $2 }'"
 	ci = commit
 	co = checkout
 	cp = cherry-pick
