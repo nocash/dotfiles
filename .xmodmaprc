@@ -1,4 +1,1 @@
-keycode 104 = Return
-keycode 66 = Control_L
-clear Lock
-add Control = Control_L
+keycode 104 = KP_Enter Return
