@@ -111,6 +111,9 @@ if ( which htop &>/dev/null ) { alias top=htop }
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
+# Modify our keyboard
+[[ -f "$HOME/.xmodmaprc" ]] && xmodmap $HOME/.xmodmaprc
+
 # This loads RVM into a shell session.
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 # [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
