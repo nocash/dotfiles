@@ -1,32 +1,40 @@
-# Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.oh-my-zsh
+# Set up the prompt
+autoload -Uz promptinit
+promptinit
+prompt walters
 
-# Set to the name theme to load.
-# Look in ~/.oh-my-zsh/themes/
-export ZSH_THEME="nocash"
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
 
-# Set to this to use case-sensitive completion
-# export CASE_SENSITIVE="true"
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
 
-# Comment this out to disable weekly auto-update checks
-export DISABLE_AUTO_UPDATE="true"
+# Add our personal bin directory to PATH
+PATH=$PATH:$HOME/bin
 
-# Uncomment following line if you want to disable colors in ls
-# export DISABLE_LS_COLORS="true"
+# Use modern completion system
+autoload -Uz compinit
+compinit
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=()
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
 
-source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-
-unsetopt correct
-unsetopt correct_all
-
-#setopt glob_complete
-setopt nobeep
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # Terminal type detection trickeries
 # http://vim.wikia.com/wiki/256_colors_in_vim
@@ -96,17 +104,15 @@ if [ -z "$SCREEN_COLORS" ] ; then
     SCREEN_COLORS=`tput colors`
 fi # end of terminal detection
 
-export PATH="$HOME/bin:$PATH"
-export WORDCHARS='-A-Za-z0-9,./?%&#:_=+@~' # from gnome-terminal defaults
-export EDITOR='vim'
+# Set preferred editor
+VISUAL=gvim
+EDITOR=vim
 
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias less='less -X'
 alias gv='gvim --remote-silent'
-alias screen='byobu'
-alias se='sudoedit'
-alias tree='tree -C | less -R'
-
-# Use htop instead of top if available
-if ( which htop &>/dev/null ) { alias top=htop }
 
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
@@ -115,11 +121,13 @@ if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 [[ -f "$HOME/.xmodmaprc" ]] && xmodmap $HOME/.xmodmaprc
 
 # This loads RVM into a shell session.
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-# [[ -s "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+PATH=$PATH:$HOME/.rvm/bin
+[[ -f "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+# fpath=(~/.zsh/Completion $fpath)
 
 # https://github.com/joelthelion/autojump
-[[ -s "/etc/profile.d/autojump.zsh" ]] && . /etc/profile.d/autojump.zsh
+[[ -f "/etc/profile.d/autojump.zsh" ]] && . /etc/profile.d/autojump.zsh
 
-# Include machine-specifc shell configuration
-[[ -s "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
+# Include machine-specifc configuration
+[[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
+[[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"

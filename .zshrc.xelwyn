@@ -1,3 +1,0 @@
-# Set proxy settings for work
-export http_proxy="http://$( cat $HOME/.ssh/http_auth )@192.168.2.250:3128"
-export https_proxy=$http_proxy
