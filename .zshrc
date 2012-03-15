@@ -109,10 +109,10 @@ VISUAL=gvim
 EDITOR=vim
 
 # Aliases
-alias ls='ls --color=auto'
-alias ll='ls -l'
-alias less='less -X'
 alias gv='gvim --remote-silent'
+alias less='less -X'
+alias ll='ls -lh'
+alias ls='ls --color=auto'
 
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
