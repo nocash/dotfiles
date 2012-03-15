@@ -113,6 +113,7 @@ alias gv='gvim --remote-silent'
 alias less='less -X'
 alias ll='ls -lh'
 alias ls='ls --color=auto'
+alias se=sudoedit
 
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
