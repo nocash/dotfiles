@@ -113,11 +113,14 @@ VISUAL=gvim
 EDITOR=vim
 
 # Aliases
+alias ack='ack-grep'
 alias gv='gvim --remote-silent'
+alias gwd='git rev-parse --show-toplevel'
+alias gcb='git symbolic-ref -q --short HEAD'
 alias less='less -X'
 alias ll='ls -lh'
 alias ls='ls --color=auto'
-alias se=sudoedit
+alias se='sudoedit'
 
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
