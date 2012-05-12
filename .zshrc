@@ -126,6 +126,9 @@ alias se='sudoedit'
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
 
+# Load Git completion
+[[ -f "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
+
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
@@ -134,11 +137,11 @@ if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
 # This loads RVM into a shell session.
 PATH=$PATH:$HOME/.rvm/bin
-[[ -f "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+[[ -f "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # fpath=(~/.zsh/Completion $fpath)
 
 # https://github.com/joelthelion/autojump
-[[ -f "/etc/profile.d/autojump.zsh" ]] && . /etc/profile.d/autojump.zsh
+[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
 
 # Include machine-specifc configuration
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
