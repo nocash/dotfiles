@@ -122,6 +122,10 @@ alias ll='ls -lh'
 alias ls='ls --color=auto'
 alias se='sudoedit'
 
+# Miscellaneous functions
+function -(){ cd - }
+function checkopt() { echo $options[$1] }
+
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
