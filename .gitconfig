@@ -1,6 +1,5 @@
 [alias]
 	br = branch
-	cb = "!git branch 2>/dev/null | awk '/^\\* / { print $2 }'"
 	ci = commit
 	co = checkout
 	cp = cherry-pick
@@ -9,7 +8,6 @@
 	fix = commit --amend -C HEAD
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
 	ll = !git l --all
-	lll = !git fa && git ll
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	st = status
