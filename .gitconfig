@@ -37,3 +37,5 @@
 	user = nocash
 [include]
 	path = .gitconfig.local
+
+# vim:noet:sts=2
