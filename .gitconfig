@@ -1,4 +1,5 @@
 [alias]
+	as = rebase -i --autosquash
 	br = branch
 	ci = commit
 	co = checkout
@@ -11,8 +12,10 @@
 	ll = !git l --all
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+	ra = rebase --abort
+	rc = rebase --continue
+	rs = rebase --skip
 	st = status
-	autosquash = rebase -i --autosquash
 [color]
 	ui = auto
 [core]
