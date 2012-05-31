@@ -116,7 +116,7 @@ EDITOR=vim
 alias ack='ack-grep'
 alias gv='gvim --remote-silent'
 alias gwd='git rev-parse --show-toplevel'
-alias gcb='git symbolic-ref -q --short HEAD'
+alias gcb='git symbolic-ref --quiet --short HEAD'
 alias less='less -X'
 alias ll='ls -lh'
 alias ls='ls --color=auto'
