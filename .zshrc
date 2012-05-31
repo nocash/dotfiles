@@ -129,6 +129,9 @@ function checkopt() { echo $options[$1] }
 # Load Git completion
 [[ -f "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
 
+# Check for htop and wrap top if it's available.
+if ( which htop &>/dev/null ) { function top(){ htop "$@"} }
+
 # Check for hub and wrap git if it's available.
 if ( which hub &>/dev/null ) { function git(){hub "$@"} }
 
