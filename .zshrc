@@ -133,7 +133,7 @@ function checkopt() { echo $options[$1] }
 if ( which htop &>/dev/null ) { function top(){ htop "$@"} }
 
 # Check for hub and wrap git if it's available.
-if ( which hub &>/dev/null ) { function git(){hub "$@"} }
+if ( which hub &>/dev/null ) { function git(){ hub "$@"} }
 
 # Modify our keyboard
 [[ -f "$HOME/.xmodmaprc" ]] && xmodmap $HOME/.xmodmaprc
