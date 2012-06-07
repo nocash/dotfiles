@@ -131,6 +131,9 @@ function checkopt() { echo $options[$1] }
 # Load Git completion
 [[ -f "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
 
+# Add Vagrant to PATH
+[[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
+
 # Check for htop and wrap top if it's available.
 if ( which htop &>/dev/null ) { function top(){ htop "$@"} }
 
