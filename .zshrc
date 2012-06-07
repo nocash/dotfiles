@@ -112,12 +112,14 @@ fi # end of terminal detection
 VISUAL=gvim
 EDITOR=vim
 
+# Set less options
+export LESS="-FRSX"
+
 # Aliases
 alias ack='ack-grep'
 alias gv='gvim --remote-silent'
 alias gwd='git rev-parse --show-toplevel'
 alias gcb='git symbolic-ref --quiet --short HEAD'
-alias less='less -X'
 alias ll='ls -lh'
 alias ls='ls --color=auto'
 alias se='sudoedit'
