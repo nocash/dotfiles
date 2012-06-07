@@ -9,7 +9,8 @@
 	fa = fetch --all
 	fix = commit --amend -C HEAD
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
-	ll = !git l --all
+	ll = !git l --branches --tags
+	lll = !git l --all
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	ra = rebase --abort
