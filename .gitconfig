@@ -1,9 +1,11 @@
 [alias]
-	as = rebase -i --autosquash
+	as = rebase --interactive --autosquash
 	br = branch
+	cf = commit --fixup
 	ci = commit
 	co = checkout
 	cp = cherry-pick
+	cs = commit --squash
 	d = diff
 	dc = diff --cached
 	fa = fetch --all
@@ -15,6 +17,7 @@
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	ra = rebase --abort
 	rc = rebase --continue
+	ri = rebase --interactive
 	rs = rebase --skip
 	st = status
 [color]
