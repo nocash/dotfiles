@@ -1,5 +1,7 @@
+# vim:noet:sts=2
 [alias]
 	as = rebase --interactive --autosquash
+	au = add --update
 	br = branch
 	cf = commit --fixup
 	ci = commit
@@ -17,6 +19,7 @@
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	ra = rebase --abort
 	rc = rebase --continue
+	rh = reset --hard
 	ri = rebase --interactive
 	rs = rebase --skip
 	st = status
@@ -45,5 +48,3 @@
 	user = nocash
 [include]
 	path = .gitconfig.local
-
-# vim:noet:sts=2
