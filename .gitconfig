@@ -11,6 +11,7 @@
 	d = diff
 	dc = diff --cached
 	fa = fetch --all
+	fap = fetch --all --prune
 	fix = commit --amend -C HEAD
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
 	ll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --branches --tags
