@@ -1,0 +1,24 @@
+update_current_git_vars
+
+if [ -n "$__CURRENT_GIT_BRANCH" ]; then
+    local s=" on %{$fg[blue]%}"
+    s+="$__CURRENT_GIT_BRANCH%{$fg[cyan]%}"
+    case "$__CURRENT_GIT_BRANCH_STATUS" in
+        ahead)
+        s+="↑"
+        ;;
+        diverged)
+        s+="↕"
+        ;;
+        behind)
+        s+="↓"
+        ;;
+    esac
+    if [ -n "$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
+        s+="±"
+    fi
+
+    printf "%s%s" $s "%{$reset_color%}"
+fi
+
+# vim:ft=sh

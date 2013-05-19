@@ -11,10 +11,7 @@ case `uname` in
     ;;
 esac
 
-# Set up the prompt
-autoload -Uz promptinit
-promptinit
-prompt walters
+source ~/.zshrc.prompt
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -56,6 +53,7 @@ zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-compl
 # Miscellaneous options
 setopt autocd
 setopt share_history
+setopt autopushd
 
 # Terminal type detection trickeries
 # http://vim.wikia.com/wiki/256_colors_in_vim
