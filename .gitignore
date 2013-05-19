@@ -1,9 +1,12 @@
-.\#*       # emacs autosave
-\#*\#      # emacs autosave
-*~         # emacs autosave
-.buildpath # eclipse project file
-.project   # eclipse project file
-.settings  # eclipse project file
-*.kpf      # komodo project file
-tags       # ctags
-Thumbs.db  # windows image cache
+*.kpf
+*~
+.DS_Store
+.\#*
+.buildpath
+.project
+.sass-cache
+.settings
+.~lock.*
+Thumbs.db
+\#*\#
+tags

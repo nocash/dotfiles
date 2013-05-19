@@ -1,3 +1,16 @@
+PLATFORM=''
+case `uname` in
+  'Darwin')
+    PLATFORM='osx'
+    ;;
+  'Linux')
+    PLATFORM='linux'
+    ;;
+  *)
+    PLATFORM='unknown'
+    ;;
+esac
+
 # Set up the prompt
 autoload -Uz promptinit
 promptinit
@@ -6,13 +19,13 @@ prompt walters
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+# Keep # lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # Add our personal bin directory to PATH
-PATH=$PATH:$HOME/bin
+PATH=$HOME/bin:$PATH
 
 # Use modern completion system
 autoload -Uz compinit
@@ -23,7 +36,8 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+# eval "$(dircolors -b)"
+[[ $PLATFORM = 'linux' ]] && eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -35,6 +49,9 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# temporary workaroud for https://github.com/mxcl/homebrew/issues/16992
+zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
 
 # Miscellaneous options
 setopt autocd
@@ -108,28 +125,73 @@ if [ -z "$SCREEN_COLORS" ] ; then
     SCREEN_COLORS=`tput colors`
 fi # end of terminal detection
 
+# Disable XON/XOFF flow control
+stty -ixon
+
+# OS-specific settings
+case "$PLATFORM" in
+  'osx')
+    VISUAL=mvim
+    alias ls='ls -G'
+    alias gv='mvim --remote-silent'
+    ;;
+  *)
+    VISUAL=gvim
+    alias ack='ack-grep'
+    alias ls='ls --color=auto'
+    alias gv='gvim --remote-silent'
+    alias open='xdg-open'
+    ;;
+esac
+
+# Initialize ssh-agent
+# http://mah.everybody.org/docs/ssh#run-ssh-agent
+SSHAGENT=/usr/bin/ssh-agent
+SSHAGENTARGS="-s"
+if [ -z "$SSH_AUTH_SOCK" -a -x "$SSHAGENT" ]; then
+  eval `$SSHAGENT $SSHAGENTARGS`
+  trap "kill $SSH_AGENT_PID" 0
+fi
+
 # Set preferred editor
-VISUAL=gvim
 EDITOR=vim
 
 # Set less options
 export LESS="-FRSX"
 
-# Aliases
-alias ack='ack-grep'
-alias gv='gvim --remote-silent'
+## Aliases: General
+alias be='bundle exec'
 alias gwd='git rev-parse --show-toplevel'
 alias gcb='git symbolic-ref --quiet --short HEAD'
 alias ll='ls -lh'
-alias ls='ls --color=auto'
-alias se='sudoedit'
+alias tree='tree -C'
+alias sv='sudo vim'
+
+## Aliases: Apache
+alias a2e='sudo a2ensite'
+alias a2d='sudo a2dissite'
+alias a2r='sudo service apache2 reload'
+alias a2rr='sudo service apache2 restart'
+
+## Aliases: Vagrant
+alias vh='vagrant halt'
+alias vhf='vagrant halt --force'
+alias vr='vagrant reload --no-provision'
+alias vrp='vagrant reload --provision'
+alias vs='vagrant suspend'
+alias vu='vagrant up --no-provision'
+alias vup='vagrant up --provision'
 
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
 
 # Load Git completion
-[[ -f "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
+if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
+  source '/usr/local/etc/bash_completion.d/git-completion.bash'
+elif [ -f "$HOME/.git-completion.bash" ]; then
+  source "$HOME/.git-completion.bash"
+fi
 
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
@@ -150,6 +212,10 @@ PATH=$PATH:$HOME/.rvm/bin
 
 # https://github.com/joelthelion/autojump
 [[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
+[[ "$PLATFORM" == 'osx' && -f `brew --prefix`/etc/autojump.zsh ]] && source `brew --prefix`/etc/autojump.zsh
+
+# https://github.com/rupa/z
+[[ -s $HOME/lib/z/z.sh ]] && source $HOME/lib/z/z.sh
 
 # Include machine-specifc configuration
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"

@@ -1,0 +1,4 @@
+--pager=less -FRSX
+--smart-case
+--type-set=sass=.scss,.sass
+--type-set=markdown=.md,.markdown

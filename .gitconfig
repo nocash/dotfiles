@@ -3,10 +3,13 @@
 	as = rebase --interactive --autosquash
 	au = add --update
 	br = branch
+	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit
 	co = checkout
 	cp = cherry-pick
+	bb = bisect bad
+	bg = bisect good
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
@@ -16,18 +19,22 @@
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
 	ll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --branches --tags
 	lll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all
+	merged = "!git-merged-branches"
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	ra = rebase --abort
+	rb = rebase
 	rc = rebase --continue
 	rh = reset --hard
 	ri = rebase --interactive
 	rs = rebase --skip
+	sha = rev-parse HEAD
+	sns = show --name-status
 	st = status
 [color]
 	ui = auto
 [core]
-	autocrlf = false
+	autocrlf = input
 	editor = vim
 	eol = lf
 	excludesfile = ~/.gitignore
@@ -49,3 +56,5 @@
 	user = nocash
 [include]
 	path = .gitconfig.local
+[push]
+	default = simple
