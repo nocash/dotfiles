@@ -225,6 +225,22 @@ PATH=$PATH:$HOME/.rvm/bin
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
 [[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
 
+# command-not-found hook
+command_not_found_handler() {
+  local g_alias cmd="$1"
+
+  # Execute a Git alias prefixed with 'g'.
+  if [ 'g' = $cmd[1] ]; then
+    g_alias=$cmd[2,-1]
+    git config --get alias.$g_alias &>/dev/null
+    if [ $? -eq 0 ]; then
+      exec git $g_alias "${@[2,-1]}"
+    fi
+  fi
+
+  return 127
+}
+
 # Run TMUX
 which tmux &>/dev/null
 if [ $? -eq 0 ] && [ -z "$TMUX" ]; then
