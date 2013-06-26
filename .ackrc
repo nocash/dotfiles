@@ -1,4 +1,7 @@
---pager=less -FRSX
+--pager=less --quit-if-one-screen --RAW-CONTROL-CHARS --chop-long-lines --no-init
 --smart-case
 --type-set=sass=.scss,.sass
 --type-set=markdown=.md,.markdown
+--type-set=coffee=.coffee
+--type-set=haml=.haml,.hamlc
+--ignore-dir=bundle
