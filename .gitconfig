@@ -1,35 +1,46 @@
 [alias]
+	a = add
+	aa = add --all
+	ap = add --patch
 	as = rebase --interactive --autosquash
-	au = add --update
+	au = add --update .
+	auu = add --update :/
+	bb = bisect bad
+	bg = bisect good
 	br = branch
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit
 	co = checkout
 	cp = cherry-pick
-	bb = bisect bad
-	bg = bisect good
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
 	fa = fetch --all
 	fap = fetch --all --prune
+	fd = clean -fd
 	fix = commit --amend -C HEAD
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
+	l1 = log -1 --oneline
+	l11 = log -1
 	ll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --branches --tags
 	lll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all
-	merged = "!git-merged-branches"
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
-	mirrors = "!git config -l | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	ra = rebase --abort
 	rb = rebase
 	rc = rebase --continue
+	re = reset
 	rh = reset --hard
 	ri = rebase --interactive
+	roll = reset HEAD~1
 	rs = rebase --skip
+	s = status
+	sh = show
 	sha = rev-parse HEAD
 	sns = show --name-status
-	st = status
+	wd = rev-parse --show-toplevel
+	wip = "!git add :/ && git commit -m 'WIP'"
 [color]
 	ui = auto
 [core]

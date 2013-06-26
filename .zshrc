@@ -159,24 +159,30 @@ export LESS="-FRSX"
 
 ## Aliases: General
 alias be='bundle exec'
-alias gwd='git rev-parse --show-toplevel'
-alias gcb='git symbolic-ref --quiet --short HEAD'
 alias ll='ls -lh'
 alias tree='tree -C'
 alias sv='sudo vim'
 
+## Aliases: Git
+alias -g gcb='`g cb`'
+alias -g glb='@{-1}'
+alias -g gwd='`g wd`'
+alias g='git'
+alias gwip="git add :/ && git commit -m 'WIP'"
+
 ## Aliases: Apache
 alias a2e='sudo a2ensite'
 alias a2d='sudo a2dissite'
-alias a2r='sudo service apache2 reload'
-alias a2rr='sudo service apache2 restart'
+alias a2r='sudo service apache2 restart'
 
 ## Aliases: Vagrant
 alias vh='vagrant halt'
 alias vhf='vagrant halt --force'
+alias vp='vagrant provision'
 alias vr='vagrant reload --no-provision'
 alias vrp='vagrant reload --provision'
 alias vs='vagrant suspend'
+alias vsh='vagrant ssh'
 alias vu='vagrant up --no-provision'
 alias vup='vagrant up --provision'
 
