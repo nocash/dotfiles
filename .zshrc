@@ -224,3 +224,9 @@ PATH=$PATH:$HOME/.rvm/bin
 # Include machine-specifc configuration
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
 [[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
+
+# Run TMUX
+which tmux &>/dev/null
+if [ $? -eq 0 ] && [ -z "$TMUX" ]; then
+  tmux attach || tmux new
+fi
