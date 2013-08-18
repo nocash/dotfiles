@@ -1,8 +1,9 @@
 [alias]
 	a = add
 	aa = add --all
+	an = add --intent-to-add
+	ann = add --all --intent-to-add
 	ap = add --patch
-	as = rebase --interactive --autosquash
 	au = add --update .
 	auu = add --update :/
 	bb = bisect bad
@@ -11,6 +12,9 @@
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit
+	cia = commit --all
+	ciam = commit --all --message
+	cim = commit --message
 	co = checkout
 	cp = cherry-pick
 	cs = commit --squash
@@ -20,6 +24,7 @@
 	fap = fetch --all --prune
 	fd = clean -fd
 	fix = commit --amend -C HEAD
+	h = help
 	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
 	l1 = log -1 --oneline
 	l11 = log -1
@@ -27,18 +32,23 @@
 	lll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+	mv = mv
 	ra = rebase --abort
 	rb = rebase
 	rc = rebase --continue
 	re = reset
 	rh = reset --hard
 	ri = rebase --interactive
+	ria = rebase --interactive --autosquash
+	rm = rm
 	roll = reset HEAD~1
 	rs = rebase --skip
-	s = status
+	s = status --short
 	sh = show
 	sha = rev-parse HEAD
 	sns = show --name-status
+	ss = status
+	st = stash
 	wd = rev-parse --show-toplevel
 	wip = "!git add :/ && git commit -m 'WIP'"
 [color]
