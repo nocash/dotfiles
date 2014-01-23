@@ -2,13 +2,14 @@
 	a = add
 	aa = add --all
 	an = add --intent-to-add
-	ann = add --all --intent-to-add
+	ann = add --all --intent-to-add :/
 	ap = add --patch
 	au = add --update .
 	auu = add --update :/
 	bb = bisect bad
 	bg = bisect good
 	br = branch
+	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit
@@ -25,18 +26,23 @@
 	fd = clean -fd
 	fix = commit --amend -C HEAD
 	h = help
-	l = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset'
+	l = log --graph --oneline --decorate
 	l1 = log -1 --oneline
 	l11 = log -1
-	ll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --branches --tags
-	lll = log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all
+	ll = log --graph --oneline --decorate --branches --tags
+	lll = log --graph --oneline --decorate --all
+	lo = log --oneline --decorate
+	log = log
+	m = merge
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+	mt = mergetool
 	mv = mv
 	ra = rebase --abort
 	rb = rebase
 	rc = rebase --continue
 	re = reset
+	ref = reflog
 	rh = reset --hard
 	ri = rebase --interactive
 	ria = rebase --interactive --autosquash
@@ -45,10 +51,13 @@
 	rs = rebase --skip
 	s = status --short
 	sh = show
-	sha = rev-parse HEAD
+	sha = rev-parse
 	sns = show --name-status
 	ss = status
 	st = stash
+	uiau = update-index --assume-unchanged
+	ull = pull --ff-only
+	ush = push
 	wd = rev-parse --show-toplevel
 	wip = "!git add :/ && git commit -m 'WIP'"
 [color]
