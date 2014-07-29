@@ -1,3 +1,4 @@
+# Set variable to allow platform-specific settings
 PLATFORM=''
 case `uname` in
   'Darwin')
@@ -11,8 +12,6 @@ case `uname` in
     ;;
 esac
 
-source ~/.zshrc.prompt
-
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
@@ -20,9 +19,6 @@ bindkey -e
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-
-# Add our personal bin directory to PATH
-PATH=$HOME/bin:$PATH
 
 # Use modern completion system
 autoload -Uz compinit
@@ -54,93 +50,10 @@ zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-compl
 setopt autocd
 setopt share_history
 setopt autopushd
-
-# Terminal type detection trickeries
-# http://vim.wikia.com/wiki/256_colors_in_vim
-if [ "$TERM" = "xterm" ] ; then
-    if [ -z "$COLORTERM" ] ; then
-        if [ -z "$XTERM_VERSION" ] ; then
-            echo "Warning: Terminal wrongly calling itself 'xterm'."
-        else
-            case "$XTERM_VERSION" in
-            "XTerm(256)") TERM="xterm-256color" ;;
-            "XTerm(88)") TERM="xterm-88color" ;;
-            "XTerm") ;;
-            *)
-                echo "Warning: Unrecognized XTERM_VERSION: $XTERM_VERSION"
-                ;;
-            esac
-        fi
-    else
-        case "$COLORTERM" in
-            gnome-terminal)
-                # Those crafty Gnome folks require you to check COLORTERM,
-                # but don't allow you to just *favor* the setting over TERM.
-                # Instead you need to compare it and perform some guesses
-                # based upon the value. This is, perhaps, too simplistic.
-                TERM="gnome-256color"
-                ;;
-            *)
-                echo "Warning: Unrecognized COLORTERM: $COLORTERM"
-                ;;
-        esac
-    fi
-fi
-
-SCREEN_COLORS="`tput colors`"
-if [ -z "$SCREEN_COLORS" ] ; then
-    case "$TERM" in
-        screen-*color-bce)
-            echo "Unknown terminal $TERM. Falling back to 'screen-bce'."
-            export TERM=screen-bce
-            ;;
-        *-88color)
-            echo "Unknown terminal $TERM. Falling back to 'xterm-88color'."
-            export TERM=xterm-88color
-            ;;
-        *-256color)
-            echo "Unknown terminal $TERM. Falling back to 'xterm-256color'."
-            export TERM=xterm-256color
-            ;;
-    esac
-    SCREEN_COLORS=`tput colors`
-fi
-if [ -z "$SCREEN_COLORS" ] ; then
-    case "$TERM" in
-        gnome*|xterm*|konsole*|aterm|[Ee]term)
-            echo "Unknown terminal $TERM. Falling back to 'xterm'."
-            export TERM=xterm
-            ;;
-        rxvt*)
-            echo "Unknown terminal $TERM. Falling back to 'rxvt'."
-            export TERM=rxvt
-            ;;
-        screen*)
-            echo "Unknown terminal $TERM. Falling back to 'screen'."
-            export TERM=screen
-            ;;
-    esac
-    SCREEN_COLORS=`tput colors`
-fi # end of terminal detection
+setopt no_nomatch
 
 # Disable XON/XOFF flow control
 stty -ixon
-
-# OS-specific settings
-case "$PLATFORM" in
-  'osx')
-    VISUAL=mvim
-    alias ls='ls -G'
-    alias gv='mvim --remote-silent'
-    ;;
-  *)
-    VISUAL=gvim
-    alias ack='ack-grep'
-    alias ls='ls --color=auto'
-    alias gv='gvim --remote-silent'
-    alias open='xdg-open'
-    ;;
-esac
 
 # Initialize ssh-agent
 # http://mah.everybody.org/docs/ssh#run-ssh-agent
@@ -157,23 +70,40 @@ EDITOR=vim
 # Set less options
 export LESS="-FRSX"
 
+# compdef
+compdef g=git
+
+# OS-specific settings
+case "$PLATFORM" in
+  'osx')
+    VISUAL=mvim
+    alias ls='ls -G'
+    alias vim='mvim -v'
+    ;;
+  *)
+    VISUAL=gvim
+    alias ack='ack-grep'
+    alias ls='ls --color=auto'
+    alias open='xdg-open'
+    ;;
+esac
+
 ## Aliases: General
 alias be='bundle exec'
+alias htop='sudo htop'
 alias ll='ls -lh'
 alias tree='tree -C'
-alias sv='sudo vim'
 
 ## Aliases: Git
+alias -g foh='-f origin HEAD'
 alias -g gcb='`g cb`'
 alias -g glb='@{-1}'
 alias -g gwd='`g wd`'
+alias -g ldm='`g branch-base`'
+alias -g ocb='origin/`g cb`'
 alias g='git'
-alias gwip="git add :/ && git commit -m 'WIP'"
-
-## Aliases: Apache
-alias a2e='sudo a2ensite'
-alias a2d='sudo a2dissite'
-alias a2r='sudo service apache2 restart'
+alias gdm='git diff `git branch-base`'
+alias gtd='git todos `git branch-base`'
 
 ## Aliases: Vagrant
 alias vh='vagrant halt'
@@ -186,44 +116,65 @@ alias vsh='vagrant ssh'
 alias vu='vagrant up --no-provision'
 alias vup='vagrant up --provision'
 
+## Aliases: TMUX
+alias trp='tmux resize-pane'
+alias trpx='tmux resize-pane -x'
+alias trpxx='tmux resize-pane -x 80'
+alias trpxxx='tmux resize-pane -x 999'
+alias trpy='tmux resize-pane -y'
+alias trpyy='tmux resize-pane -y 24'
+alias trpyyy='tmux resize-pane -y 999'
+alias tx='tmux resize-pane -x 80'
+
+function trpxy() {
+  local x=$1 y=$2
+  tmux resize-pane -x $x -y $y
+}
+
+## Aliases: Misc.
+alias ag='ag --color --group'
+alias la='localeapp'
+alias mqc='git commit --no-edit; script/mergeq --continue'
+alias mqi='script/mergeq integration'
+alias mqm='script/mergeq master'
+alias op='open-pull'
+alias zc='zeus c'
+alias zg='zeus g'
+alias zr='zeus rspec'
+alias zrk='zeus rake'
+alias zs='script/zeus'
+
+function punch() {
+  mkdir -p $1:h
+  touch $1
+}
+
+function ole() { "$( git rev-parse --show-toplevel )/bin/open_last_error" "$@" }
+
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
 
+
 # Load Git completion
-if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
-  source '/usr/local/etc/bash_completion.d/git-completion.bash'
-elif [ -f "$HOME/.git-completion.bash" ]; then
-  source "$HOME/.git-completion.bash"
-fi
+# if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
+#   source '/usr/local/etc/bash_completion.d/git-completion.bash'
+# elif [ -f "$HOME/.git-completion.bash" ]; then
+#   source "$HOME/.git-completion.bash"
+# fi
 
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
 
-# Check for htop and wrap top if it's available.
-if ( which htop &>/dev/null ) { function top(){ htop "$@"} }
-
 # Check for hub and wrap git if it's available.
-if ( which hub &>/dev/null ) { function git(){ hub "$@"} }
-
-# Modify our keyboard
-[[ -f "$HOME/.xmodmaprc" ]] && xmodmap $HOME/.xmodmaprc
-
-# This loads RVM into a shell session.
-PATH=$PATH:$HOME/.rvm/bin
-[[ -f "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# fpath=(~/.zsh/Completion $fpath)
+if ( command -v hub >&- ) { function git(){ hub "$@"} }
 
 # https://github.com/joelthelion/autojump
 [[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
 [[ "$PLATFORM" == 'osx' && -f `brew --prefix`/etc/autojump.zsh ]] && source `brew --prefix`/etc/autojump.zsh
 
-# https://github.com/rupa/z
-[[ -s $HOME/lib/z/z.sh ]] && source $HOME/lib/z/z.sh
-
-# Include machine-specifc configuration
-[[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
-[[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
+# Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin
 
 # command-not-found hook
 command_not_found_handler() {
@@ -241,8 +192,13 @@ command_not_found_handler() {
   return 127
 }
 
-# Run TMUX
-which tmux &>/dev/null
-if [ $? -eq 0 ] && [ -z "$TMUX" ]; then
-  tmux attach || tmux new
-fi
+# set our prompt options
+[[ -f "$HOME/.zshrc.prompt" ]] && . "$HOME/.zshrc.prompt"
+
+# Include machine-specifc configuration
+[[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
+[[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
+
+# Run TMUX if tmux exists and we're not inside tmux.
+if ( command -v tmux >&- && [ -z "$TMUX" ] ) { tmux new }
+# if ( command -v wemux >&- && [ -z "$TMUX" ] ) { wemux new }
