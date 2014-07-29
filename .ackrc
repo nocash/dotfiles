@@ -5,3 +5,4 @@
 --type-set=coffee=.coffee
 --type-set=haml=.haml,.hamlc
 --ignore-dir=bundle
+--ignore-dir=tmp/cache
