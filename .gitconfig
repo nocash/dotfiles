@@ -1,3 +1,4 @@
+# vim:noet:sts=2
 [alias]
 	a = add
 	aa = add --all
@@ -9,13 +10,15 @@
 	bb = bisect bad
 	bg = bisect good
 	br = branch
+	brbr = branch-branch
 	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
-	ci = commit
-	cia = commit --all
+	ci = commit --verbose
+	cia = commit --all --verbose
 	ciam = commit --all --message
 	cim = commit --message
+	cin = commit --no-edit
 	co = checkout
 	cp = cherry-pick
 	cs = commit --squash
@@ -33,7 +36,7 @@
 	lll = log --graph --oneline --decorate --all
 	lo = log --oneline --decorate
 	log = log
-	m = merge
+	m = merge --no-edit
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	mt = mergetool
@@ -59,7 +62,7 @@
 	ull = pull --ff-only
 	ush = push
 	wd = rev-parse --show-toplevel
-	wip = "!git add :/ && git commit -m 'WIP'"
+	wip = "!git add :/ && git commit --message 'WIP'"
 [color]
 	ui = auto
 [core]
@@ -87,5 +90,3 @@
 	path = .gitconfig.local
 [push]
 	default = simple
-
-# vim:noet:sts=2
