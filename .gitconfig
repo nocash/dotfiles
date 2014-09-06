@@ -29,7 +29,7 @@
 	dns = diff --name-status
 	fa = fetch --all --prune
 	fd = clean -fd
-	fix = commit --amend -C HEAD
+	fix = commit --amend --reuse-message=HEAD
 	h = help
 	l = log --graph --oneline --decorate
 	l1 = log -1 --oneline
@@ -64,7 +64,7 @@
 	ull = pull --ff-only
 	ush = push
 	wd = rev-parse --show-toplevel
-	wip = "!git add :/ && git commit --message 'WIP'"
+	wip = "!git add --all :/ && git commit --message 'WIP'"
 [color]
 	ui = auto
 [core]
