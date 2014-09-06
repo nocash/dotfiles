@@ -113,6 +113,7 @@ alias vr='vagrant reload --no-provision'
 alias vrp='vagrant reload --provision'
 alias vs='vagrant suspend'
 alias vsh='vagrant ssh'
+alias vst='vagrant status'
 alias vu='vagrant up --no-provision'
 alias vup='vagrant up --provision'
 
@@ -137,7 +138,6 @@ alias la='localeapp'
 alias mqc='git commit --no-edit; script/mergeq --continue'
 alias mqi='script/mergeq integration'
 alias mqm='script/mergeq master'
-alias op='open-pull'
 alias zc='zeus c'
 alias zg='zeus g'
 alias zr='zeus rspec'
@@ -150,11 +150,11 @@ function punch() {
 }
 
 function ole() { "$( git rev-parse --show-toplevel )/bin/open_last_error" "$@" }
+function op() { "$( git rev-parse --show-toplevel )/bin/open_pull_request" "$@" }
 
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
-
 
 # Load Git completion
 # if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
@@ -183,7 +183,7 @@ command_not_found_handler() {
   # Execute a Git alias prefixed with 'g'.
   if [ 'g' = $cmd[1] ]; then
     g_alias=$cmd[2,-1]
-    git config --get alias.$g_alias &>/dev/null
+    git config --get "alias.$g_alias" &>/dev/null
     if [ $? -eq 0 ]; then
       exec git $g_alias "${@[2,-1]}"
     fi
