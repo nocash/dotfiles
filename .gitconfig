@@ -61,6 +61,9 @@
 	sns = show --name-status
 	ss = status
 	st = stash
+	stk = stash --keep-index
+	stp = stash pop
+	stu = stash --include-untracked
 	uiau = update-index --assume-unchanged
 	ull = pull --ff-only
 	ush = push
