@@ -11,6 +11,7 @@
 	bg = bisect good
 	br = branch
 	brbr = branch-branch
+	brc = branch-commits
 	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
