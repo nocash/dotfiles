@@ -25,8 +25,7 @@
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
-	fa = fetch --all
-	fap = fetch --all --prune
+	fa = fetch --all --prune
 	fd = clean -fd
 	fix = commit --amend -C HEAD
 	h = help
