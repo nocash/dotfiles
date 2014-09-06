@@ -41,6 +41,7 @@
 	m = merge --no-edit
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
+	mnf = merge --no-edit --no-ff
 	mt = mergetool
 	mv = mv
 	ra = rebase --abort
