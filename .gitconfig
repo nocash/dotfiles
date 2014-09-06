@@ -55,7 +55,7 @@
 	rm = rm
 	roll = reset HEAD~1
 	rs = rebase --skip
-	s = status --short
+	s = status --short --branch
 	sh = show
 	sha = rev-parse
 	sns = show --name-status
