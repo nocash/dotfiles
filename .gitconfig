@@ -25,6 +25,8 @@
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
+	dno = diff --name-only
+	dns = diff --name-status
 	fa = fetch --all --prune
 	fd = clean -fd
 	fix = commit --amend -C HEAD
