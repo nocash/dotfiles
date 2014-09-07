@@ -10,8 +10,8 @@
 	bb = bisect bad
 	bg = bisect good
 	br = branch
-	brbr = branch-branch
-	brc = branch-commits
+	brbr = branch-branch # custom script
+	brc = branch-commits # custom script
 	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
@@ -65,6 +65,7 @@
 	stp = stash pop
 	stu = stash --include-untracked
 	uiau = update-index --assume-unchanged
+	td = todos # custom script
 	ull = pull --ff-only
 	ush = push
 	wd = rev-parse --show-toplevel
