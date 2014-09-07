@@ -28,7 +28,7 @@
 	dno = diff --name-only
 	dns = diff --name-status
 	fa = fetch --all --prune
-	fd = clean -fd
+	fd = clean --force -d
 	fix = commit --amend --reuse-message=HEAD
 	h = help
 	l = log --graph --oneline --decorate
