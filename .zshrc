@@ -96,10 +96,7 @@ alias tree='tree -C'
 
 ## Aliases: Git
 alias -g foh='-f origin HEAD'
-alias -g gcb='`g cb`'
 alias -g glb='@{-1}'
-alias -g gwd='`g wd`'
-alias -g ldm='`g branch-base`'
 alias -g ocb='origin/`g cb`'
 alias g='git'
 
