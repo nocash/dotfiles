@@ -144,8 +144,21 @@ function punch() {
   touch $1
 }
 
-function ole() { "$( git rev-parse --show-toplevel )/bin/open_last_error" "$@" }
-function op() { "$( git rev-parse --show-toplevel )/bin/open_pull_request" "$@" }
+function ole() {
+  local script_path="$( git rev-parse --show-toplevel )/bin/open_last_error"
+  if [ ! -f "$script_path" ]; then
+    script_path="$HOME/bin/open-last-error"
+  fi
+  $( "$script_path" "$@" )
+}
+
+function op() {
+  local script_path="$( git rev-parse --show-toplevel )/bin/open_pull_request"
+  if [ ! -f "$script_path" ]; then
+    script_path="$HOME/bin/open-pull-request"
+  fi
+  $( "$script_path" "$@" )
+}
 
 # Miscellaneous functions
 function -(){ cd - }
