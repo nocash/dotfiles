@@ -62,13 +62,13 @@
 	s = status --short --branch
 	sh = show
 	sha = rev-parse
+	skip = update-index --skip-worktree
 	sns = show --name-status
 	ss = status
 	st = stash
 	stk = stash --keep-index
 	stp = stash pop
 	stu = stash --include-untracked
-	uiau = update-index --assume-unchanged
 	td = todos # custom script
 	ull = pull --ff-only
 	ush = push
