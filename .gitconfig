@@ -40,6 +40,8 @@
 	lo = log --oneline --decorate
 	log = log
 	m = merge --no-edit
+	mb = "!f() { git merge-base $1 HEAD; }; f"
+	mbm = "!git merge-base $( git which-master ) HEAD"
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	mnf = merge --no-edit --no-ff
