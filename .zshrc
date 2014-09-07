@@ -102,8 +102,6 @@ alias -g gwd='`g wd`'
 alias -g ldm='`g branch-base`'
 alias -g ocb='origin/`g cb`'
 alias g='git'
-alias gdm='git diff `git branch-base`'
-alias gtd='git todos `git branch-base`'
 
 ## Aliases: Vagrant
 alias vh='vagrant halt'
