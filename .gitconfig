@@ -25,6 +25,7 @@
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
+	dm = "!git diff $( git merge-base $( git which-master ) HEAD )"
 	dno = diff --name-only
 	dns = diff --name-status
 	fa = fetch --all --prune
