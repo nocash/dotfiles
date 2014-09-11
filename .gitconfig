@@ -47,6 +47,7 @@
 	mnf = merge --no-edit --no-ff
 	mt = mergetool
 	mv = mv
+	osh = push --set-upstream origin HEAD
 	ra = rebase --abort
 	rb = rebase
 	rc = rebase --continue
@@ -54,6 +55,7 @@
 	ref = reflog
 	rew = commit --amend --only --allow-empty
 	rh = reset --hard
+	rho = "!git stash --include-untracked >/dev/null && git reset --hard HEAD@{u}"
 	ri = rebase --interactive
 	ria = rebase --interactive --autosquash
 	rm = rm
