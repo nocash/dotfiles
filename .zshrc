@@ -128,7 +128,7 @@ function trpxy() {
 }
 
 ## Aliases: Misc.
-alias ag='ag --color --group'
+alias ag='ag --pager=less\ --quit-if-one-screen\ --RAW-CONTROL-CHARS\ --chop-long-lines\ --no-init'
 alias grake='rake -g'
 alias la='localeapp'
 alias mqc='git commit --no-edit; script/mergeq --continue'
