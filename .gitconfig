@@ -52,7 +52,7 @@
 	rc = rebase --continue
 	re = reset
 	ref = reflog
-	reword = commit --amend --only --allow-empty
+	rew = commit --amend --only --allow-empty
 	rh = reset --hard
 	ri = rebase --interactive
 	ria = rebase --interactive --autosquash
