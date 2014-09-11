@@ -182,9 +182,6 @@ if ( command -v hub >&- ) { function git(){ hub "$@"} }
 [[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
 [[ "$PLATFORM" == 'osx' && -f `brew --prefix`/etc/autojump.zsh ]] && source `brew --prefix`/etc/autojump.zsh
 
-# Add RVM to PATH for scripting
-PATH=$PATH:$HOME/.rvm/bin
-
 # command-not-found hook
 command_not_found_handler() {
   local g_alias cmd="$1"
@@ -211,3 +208,6 @@ command_not_found_handler() {
 # Run TMUX if tmux exists and we're not inside tmux.
 if ( command -v tmux >&- && [ -z "$TMUX" ] ) { tmux new }
 # if ( command -v wemux >&- && [ -z "$TMUX" ] ) { wemux new }
+
+# Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin
