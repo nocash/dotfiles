@@ -3,10 +3,9 @@
 	a = add
 	aa = add --all
 	an = add --intent-to-add
-	ann = add --all --intent-to-add :/
+	ann = add --all --intent-to-add
 	ap = add --patch
-	au = add --update .
-	auu = add --update :/
+	au = add --update
 	bb = bisect bad
 	bg = bisect good
 	br = branch
