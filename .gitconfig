@@ -9,31 +9,38 @@
 	bb = bisect bad
 	bg = bisect good
 	br = branch
-	brbr = branch-branch # custom script
-	brc = branch-commits # custom script
+	brb = branch-branch # custom script
 	bs = bisect skip
+	bss = bisect start HEAD
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit --verbose
 	cia = commit --all --verbose
-	ciam = commit --all --message
+	ciam = commit --all --verbose --message
+	cich = commit --reuse-message HEAD
 	cim = commit --message
 	cin = commit --no-edit
 	co = checkout
+	cop = "!git branch | cut -c3- | pick | xargs git checkout"
+	copb = "!git checkout `pbpaste`"
 	cp = cherry-pick
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
 	dm = "!git diff $( git merge-base $( git which-master ) HEAD )"
+	dmo = "!git dm --name-only"
+	dms = "!git dm --name-status"
 	dno = diff --name-only
 	dns = diff --name-status
 	fa = fetch --all --prune
 	fd = clean --force -d
 	fix = commit --amend --reuse-message=HEAD
+	foh = push --force origin HEAD
 	h = help
 	l = log --graph --oneline --decorate
 	l1 = log -1 --oneline
 	l11 = log -1
+	lb = branch-commits # custom script
 	ll = log --graph --oneline --decorate --branches --tags
 	lll = log --graph --oneline --decorate --all
 	lo = log --oneline --decorate
@@ -41,21 +48,26 @@
 	m = merge --no-edit
 	mb = "!f() { git merge-base $1 HEAD; }; f"
 	mbm = "!git merge-base $( git which-master ) HEAD"
+	mff = merge --ff-only
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	mnf = merge --no-edit --no-ff
 	mt = mergetool
 	mv = mv
+	noskip = "!git ls-files -v | awk '/^S/{ print $2 }' | xargs git update-index --no-skip-worktree"
 	osh = push --set-upstream origin HEAD
 	ra = rebase --abort
 	rb = rebase
+	rbo = rebase --onto
 	rc = rebase --continue
 	re = reset
 	ref = reflog
 	rew = commit --amend --only --allow-empty
 	rh = reset --hard
 	rho = "!git stash --include-untracked >/dev/null && git reset --hard HEAD@{u}"
+	rhof = "!git fa && git rho"
 	ri = rebase --interactive
+	ri3 = rebase --interactive HEAD~3
 	ria = rebase --interactive --autosquash
 	rm = rm
 	roll = reset HEAD~1
@@ -63,8 +75,9 @@
 	s = status --short --branch
 	sh = show
 	sha = rev-parse
+	sho = show --name-only
+	shs = show --name-status
 	skip = update-index --skip-worktree
-	sns = show --name-status
 	ss = status
 	st = stash
 	stk = stash --keep-index
@@ -102,3 +115,5 @@
 	path = .gitconfig.local
 [push]
 	default = simple
+[rerere]
+	enabled = true

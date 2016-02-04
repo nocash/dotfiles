@@ -6,7 +6,9 @@
 .project
 .sass-cache
 .settings
+.tern-port
 .~lock.*
 Thumbs.db
 \#*\#
+npm-debug.log
 tags
