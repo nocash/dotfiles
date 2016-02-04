@@ -23,26 +23,38 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
+     dash
      emacs-lisp
-     ;; git
-     ;; markdown
+     git
+     javascript
+     markdown
      ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     osx
+     php
+     react
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ruby
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      haml-mode
+                                      undo-tree
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    evil-escape
+                                    )
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -70,7 +82,7 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
@@ -78,13 +90,15 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(
+                         spacemacs-dark
                          spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+                         ;; solarized-light
+                         ;; solarized-dark
+                         molokai
+                         ;; leuven
+                         ;; zenburn
+                         )
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -192,12 +206,49 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
-  )
+
+  ;; Enable line numbers
+  (global-linum-mode t)
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
- This function is called at the very end of Spacemacs initialization after
+This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  ;; (define-key evil-normal-state-map "\C-h" 'evil-window-left)
+  ;; (define-key evil-normal-state-map "\C-j" 'evil-window-dow
+  ;; (define-key evil-normal-state-map "\C-k" 'evil-window-up)
+  ;; (define-key evil-normal-state-map "\C-l" 'evil-window-right)
+
+  (define-key evil-normal-state-map (kbd "[ SPC") 'spacemacs/insert-line-above-no-indent)
+  (define-key evil-normal-state-map (kbd "] SPC") 'spacemacs/insert-line-below-no-indent)
+
+  (define-key evil-insert-state-map "\C-a" 'evil-first-non-blank)
+  (define-key evil-insert-state-map "\C-d" 'delete-char)
+  (define-key evil-insert-state-map "\C-e" 'move-end-of-line)
+  (define-key evil-insert-state-map "\C-k" 'kill-line)
+  (define-key evil-insert-state-map "\C-n" 'next-line)
+  (define-key evil-insert-state-map "\C-p" 'previous-line)
+
+  ;; (global-set-key (kbd "C-h") 'backward-delete-char)
+  ;; (global-set-key (kbd "H-h") 'help-command)
+
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   js2-mode-show-parse-errors nil
+   js2-mode-show-strict-warnings nil
+   js2-strict-trailing-comma-warning nil
+   web-mode-attr-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-markup-indent-offset 2
+
+   ;; Miscellaneous
+   require-final-newline t
+   vc-follow-symlinks t
+   )
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

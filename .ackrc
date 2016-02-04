@@ -6,3 +6,4 @@
 --type-set=haml=.haml,.hamlc
 --ignore-dir=bundle
 --ignore-dir=tmp/cache
+--ignore-dir=app/storage/*

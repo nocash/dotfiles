@@ -68,7 +68,7 @@ fi
 EDITOR=vim
 
 # Set less options
-export LESS="-FRSX"
+export LESS="-FRSX --jump-target=.5"
 
 # compdef
 compdef g=git
@@ -90,17 +90,18 @@ esac
 
 ## Aliases: General
 alias be='bundle exec'
+alias grep='egrep'
 alias htop='sudo htop'
 alias ll='ls -lh'
 alias tree='tree -C'
 
 ## Aliases: Git
-alias -g foh='-f origin HEAD'
-alias -g glb='@{-1}'
 alias -g ocb='origin/`g cb`'
 alias g='git'
 
 ## Aliases: Vagrant
+alias vd='vagrant destroy'
+alias vdf='vagrant destroy --force'
 alias vh='vagrant halt'
 alias vhf='vagrant halt --force'
 alias vp='vagrant provision'
@@ -132,8 +133,12 @@ alias ag='ag --pager=less\ --quit-if-one-screen\ --RAW-CONTROL-CHARS\ --chop-lon
 alias grake='rake -g'
 alias la='localeapp'
 alias mqc='git commit --no-edit; script/mergeq --continue'
-alias mqi='script/mergeq integration'
+alias mqe='script/mergeq edge'
 alias mqm='script/mergeq master'
+alias mqr='rm .mergeq/merging'
+alias pbc='pbcopy'
+alias pbp='pbpaste'
+alias start='noglob start'
 alias zc='zeus c'
 alias zg='zeus g'
 alias zr='zeus rspec'
@@ -161,9 +166,24 @@ function op() {
   $( "$script_path" "$@" )
 }
 
+# Restat Zeus after it crashes.
+function zeus () {
+  ARGS=$@
+  command zeus "$@"
+  ZE_EC=$?
+  stty sane
+  if [ $ZE_EC = 2 ]; then
+    zeus "$ARGS"
+  fi
+}
+
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
+function rr { stty sane }
+function xa { xargs "$@" }
+function findn { find . -name "*$@*" }
+function inline { xargs echo -n }
 
 # Load Git completion
 # if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
@@ -172,15 +192,24 @@ function checkopt() { echo $options[$1] }
 #   source "$HOME/.git-completion.bash"
 # fi
 
+# Authenticate Homebrew requests
+[[ -s "$HOME/.homebrew_github_api_token" ]] \
+  && export HOMEBREW_GITHUB_API_TOKEN="$(< $HOME/.homebrew_github_api_token)"
+
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
+# Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin
+# Add Android SDK tools to PATH
+PATH=$PATH:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools
+export ANDROID_HOME=$HOME/Library/Android/sdk
 
 # Check for hub and wrap git if it's available.
 if ( command -v hub >&- ) { function git(){ hub "$@"} }
 
 # https://github.com/joelthelion/autojump
-[[ -s /etc/profile.d/autojump.zsh ]] && source /etc/profile.d/autojump.zsh
-[[ "$PLATFORM" == 'osx' && -f `brew --prefix`/etc/autojump.zsh ]] && source `brew --prefix`/etc/autojump.zsh
+[[ "$PLATFORM" == 'osx' && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] \
+  && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # command-not-found hook
 command_not_found_handler() {
@@ -201,6 +230,11 @@ command_not_found_handler() {
 # set our prompt options
 [[ -f "$HOME/.zshrc.prompt" ]] && . "$HOME/.zshrc.prompt"
 
+export GOPATH="$HOME/projects/go"
+
+export NVM_DIR="/Users/beau/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 # Include machine-specifc configuration
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
 [[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
@@ -208,6 +242,3 @@ command_not_found_handler() {
 # Run TMUX if tmux exists and we're not inside tmux.
 if ( command -v tmux >&- && [ -z "$TMUX" ] ) { tmux new }
 # if ( command -v wemux >&- && [ -z "$TMUX" ] ) { wemux new }
-
-# Add RVM to PATH for scripting
-PATH=$PATH:$HOME/.rvm/bin
