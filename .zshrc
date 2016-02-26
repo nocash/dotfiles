@@ -76,9 +76,13 @@ compdef g=git
 # OS-specific settings
 case "$PLATFORM" in
   'osx')
-    VISUAL=mvim
+    VISUAL="emacsclient -c"
     alias ls='ls -G'
     alias vim='mvim -v'
+
+    # http://docs.basho.com/riak/latest/ops/tuning/open-files-limit/#Mac-OS-X
+    ulimit -n 65536
+    ulimit -u 2048
     ;;
   *)
     VISUAL=gvim
@@ -132,18 +136,37 @@ function trpxy() {
 alias ag='ag --pager=less\ --quit-if-one-screen\ --RAW-CONTROL-CHARS\ --chop-long-lines\ --no-init'
 alias grake='rake -g'
 alias la='localeapp'
-alias mqc='git commit --no-edit; script/mergeq --continue'
-alias mqe='script/mergeq edge'
-alias mqm='script/mergeq master'
-alias mqr='rm .mergeq/merging'
+alias marked='open -a "Marked 2"'
+alias start='noglob start'
+
+alias ec='emacsclient -c -n'
+alias ee='emacsclient -n'
+alias et='emacsclient -c -t'
+
+alias mqc='git commit --no-edit; $(upsearch .mergeq)/script/mergeq --continue'
+alias mqe='mergeq edge'
+alias mqm='mergeq master'
+alias mqp='mergeq production'
+alias mqr='rm $(upsearch .mergeq)/.mergeq/merging'
+
 alias pbc='pbcopy'
 alias pbp='pbpaste'
-alias start='noglob start'
+
 alias zc='zeus c'
 alias zg='zeus g'
 alias zr='zeus rspec'
 alias zrk='zeus rake'
 alias zs='script/zeus'
+
+function mergeq() {
+  local mqDir=$(upsearch script/mergeq)
+  [[ -z "$1" ]] && return 1
+  [[ -z "$mqDir" ]] && return 44
+
+  cd "$mqDir"
+  script/mergeq "$1"
+  cd -
+}
 
 function punch() {
   mkdir -p $1:h
@@ -155,7 +178,7 @@ function ole() {
   if [ ! -f "$script_path" ]; then
     script_path="$HOME/bin/open-last-error"
   fi
-  $( "$script_path" "$@" )
+  "$script_path" "$@"
 }
 
 function op() {
@@ -163,7 +186,7 @@ function op() {
   if [ ! -f "$script_path" ]; then
     script_path="$HOME/bin/open-pull-request"
   fi
-  $( "$script_path" "$@" )
+  "$script_path" "$@"
 }
 
 # Restat Zeus after it crashes.
@@ -180,10 +203,10 @@ function zeus () {
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
-function rr { stty sane }
-function xa { xargs "$@" }
-function findn { find . -name "*$@*" }
 function inline { xargs echo -n }
+function rr { stty sane }
+function tr- { tr '[:space:]' '-' < <(echo -n "$@") }
+function xa { xargs "$@" }
 
 # Load Git completion
 # if [ -f "/usr/local/etc/bash_completion.d/git-completion.bash" ]; then
@@ -196,13 +219,15 @@ function inline { xargs echo -n }
 [[ -s "$HOME/.homebrew_github_api_token" ]] \
   && export HOMEBREW_GITHUB_API_TOKEN="$(< $HOME/.homebrew_github_api_token)"
 
+# Add sbin to PATH
+PATH="$PATH:/usr/local/sbin"
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
 # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/.rvm/bin
 # Add Android SDK tools to PATH
-PATH=$PATH:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools
-export ANDROID_HOME=$HOME/Library/Android/sdk
+PATH="$PATH:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools"
+export PATH ANDROID_HOME=$HOME/Library/Android/sdk
 
 # Check for hub and wrap git if it's available.
 if ( command -v hub >&- ) { function git(){ hub "$@"} }
