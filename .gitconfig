@@ -52,6 +52,7 @@
 	mirror = "!for r in $( git mirrors ); do git push $r; done"
 	mirrors = "!git config --list | awk -F . '/^remote\\.[^.]+\\.mirror=true/ { print $2 }'"
 	mnf = merge --no-edit --no-ff
+	mote = remote
 	mt = mergetool
 	mv = mv
 	noskip = "!git ls-files -v | awk '/^S/{ print $2 }' | xargs git update-index --no-skip-worktree"
