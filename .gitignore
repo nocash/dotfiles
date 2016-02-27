@@ -12,3 +12,5 @@ Thumbs.db
 \#*\#
 npm-debug.log
 tags
+dump.rdb
+.projectile
