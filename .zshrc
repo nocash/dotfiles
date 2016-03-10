@@ -158,6 +158,11 @@ alias zr='zeus rspec'
 alias zrk='zeus rake'
 alias zs='script/zeus'
 
+function ffind() {
+  find . -name "$@"
+}
+alias ffind='noglob ffind'
+
 function mergeq() {
   local mqDir=$(upsearch script/mergeq)
   [[ -z "$1" ]] && return 1
