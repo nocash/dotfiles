@@ -10,8 +10,10 @@
 	bg = bisect good
 	br = branch
 	brb = branch-branch # custom script
-	bs = bisect skip
-	bss = bisect start HEAD
+	brddp = "!git branch | cut -c3- | pick | xargs git branch -D"
+	brdp = "!git branch | cut -c3- | pick | xargs git branch --delete"
+	bs = bisect start HEAD
+	bx = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit --verbose
@@ -35,11 +37,14 @@
 	fa = fetch --all --prune
 	fd = clean --force -d
 	fix = commit --amend --reuse-message=HEAD
-	foh = push --force origin HEAD
+	fixa = commit --amend --reuse-message=HEAD --all
+	fixo = commit --amend --reuse-message=HEAD --only
+	foh = push --force-with-lease origin HEAD
 	h = help
 	l = log --graph --oneline --decorate
 	l1 = log -1 --oneline
 	l11 = log -1
+	l2 = log -2 --oneline
 	lb = branch-commits # custom script
 	ll = log --graph --oneline --decorate --branches --tags
 	lll = log --graph --oneline --decorate --all
