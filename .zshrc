@@ -15,14 +15,21 @@ esac
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
+# Use modern completion system
+autoload -Uz compinit
+compinit
+
+# Miscellaneous options
+setopt autocd
+setopt sharehistory
+setopt histignorealldups
+setopt autopushd
+setopt no_nomatch
+
 # Keep # lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
-
-# Use modern completion system
-autoload -Uz compinit
-compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -45,12 +52,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # temporary workaroud for https://github.com/mxcl/homebrew/issues/16992
 zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
-
-# Miscellaneous options
-setopt autocd
-setopt share_history
-setopt autopushd
-setopt no_nomatch
 
 # Disable XON/XOFF flow control
 stty -ixon
