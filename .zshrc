@@ -135,6 +135,8 @@ function trpxy() {
 
 ## Aliases: Misc.
 alias ag='ag --pager=less\ --quit-if-one-screen\ --RAW-CONTROL-CHARS\ --chop-long-lines\ --no-init'
+alias chx='chmod +x'
+alias chxx='chmod +x !$'
 alias grake='rake -g'
 alias la='localeapp'
 alias marked='open -a "Marked 2"'
@@ -163,6 +165,10 @@ function ffind() {
   find . -name "$@"
 }
 alias ffind='noglob ffind'
+
+function px {
+  ps aux | grep "$@"
+}
 
 function mergeq() {
   local mqDir=$(upsearch script/mergeq)
