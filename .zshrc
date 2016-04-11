@@ -231,6 +231,13 @@ function xa { xargs "$@" }
 [[ -s "$HOME/.homebrew_github_api_token" ]] \
   && export HOMEBREW_GITHUB_API_TOKEN="$(< $HOME/.homebrew_github_api_token)"
 
+# https://github.com/tarjoilija/zgen
+source "${HOME}/.zgen/zgen.zsh"
+# check if there's no init script
+if ! zgen saved; then
+  zgen save
+fi
+
 # Add sbin to PATH
 PATH="$PATH:/usr/local/sbin"
 # Add Vagrant to PATH
