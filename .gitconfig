@@ -10,6 +10,7 @@
 	bg = bisect good
 	br = branch
 	brb = branch-branch # custom script
+	brc = "!git branch | cut -c3-"
 	brddp = "!git branch | cut -c3- | pick | xargs git branch -D"
 	brdp = "!git branch | cut -c3- | pick | xargs git branch --delete"
 	bs = bisect start HEAD
