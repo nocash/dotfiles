@@ -272,6 +272,16 @@ export GOPATH="$HOME/projects/go"
 ##  Command Not Found Handler #################################################
 ###############################################################################
 
+# When I type a command that does not exist and that command starts with the
+# letter "g" then compare the *rest* of that command to my git aliases and, if
+# one matches, execute the git alias and pass the remaining arguments to it.
+#
+# Given a .giconfig that looks like...
+#
+# [alias]
+#   co = checkout
+#
+# ...then typing "gco develop" executes "git checkout develop".
 cnf_git_alias() {
   local cmd
   cmd="$1"
