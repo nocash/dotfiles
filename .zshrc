@@ -96,6 +96,7 @@ esac
 
 ## Aliases: General
 alias be='bundle exec'
+alias cx='chmod +x'
 alias grep='egrep'
 alias htop='sudo htop'
 alias ll='ls -lh'
@@ -128,6 +129,14 @@ alias trpy='tmux resize-pane -y'
 alias trpyy='tmux resize-pane -y 24'
 alias trpyyy='tmux resize-pane -y 999'
 alias tx='tmux resize-pane -x 80'
+
+## Aliases: Docker
+alias dc='docker-compose'
+alias dh='docker help'
+alias dm='docker-machine'
+alias dps='docker ps'
+alias dpsa='docker ps --all'
+alias dpsaq='docker ps --all --quiet'
 
 function trpxy() {
   local x=$1 y=$2
@@ -217,6 +226,7 @@ function zeus () {
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
 function inline { xargs echo -n }
+function lc { tr '[:upper:]' '[:lower:]' < <(echo -n "$@") }
 function rr { stty sane }
 function tr- { tr '[:space:]' '-' < <(echo -n "$@") }
 function xa { xargs "$@" }
