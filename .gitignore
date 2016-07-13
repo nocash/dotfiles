@@ -4,13 +4,13 @@
 .\#*
 .buildpath
 .project
+.projectile
 .sass-cache
 .settings
 .tern-port
 .~lock.*
 Thumbs.db
 \#*\#
+dump.rdb
 npm-debug.log
 tags
-dump.rdb
-.projectile
