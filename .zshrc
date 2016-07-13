@@ -77,9 +77,10 @@ compdef g=git
 # OS-specific settings
 case "$PLATFORM" in
   'osx')
-    VISUAL="emacsclient -c"
+    VISUAL="emacs"
     alias ls='ls -G'
-    alias vim='mvim -v'
+    # alias vim='mvim -v'
+    alias vim='nvim'
 
     # http://docs.basho.com/riak/latest/ops/tuning/open-files-limit/#Mac-OS-X
     ulimit -n 65536
