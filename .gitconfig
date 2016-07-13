@@ -26,6 +26,7 @@
 	co = checkout
 	cop = "!git branch | cut -c3- | pick | xargs git checkout"
 	copb = "!git checkout `pbpaste`"
+	copr = "!git branch --remote | cut -c3- | grep -v HEAD | sed -e's%^origin/%%' | pick | xargs git checkout"
 	cp = cherry-pick
 	cs = commit --squash
 	d = diff
@@ -70,7 +71,7 @@
 	re = reset
 	ref = reflog
 	rew = commit --amend --only --allow-empty
-	rh = reset --hard
+	rh = "!git stash --include-untracked && git reset --hard"
 	rho = "!git stash --include-untracked >/dev/null && git reset --hard HEAD@{u}"
 	rhof = "!git fa && git rho"
 	ri = rebase --interactive
@@ -82,7 +83,7 @@
 	s = status --short --branch
 	sh = show
 	sha = rev-parse
-	sho = show --name-only
+	sho = show --name-only --format=""
 	shs = show --name-status
 	skip = update-index --skip-worktree
 	ss = status
@@ -92,6 +93,7 @@
 	stu = stash --include-untracked
 	td = todos # custom script
 	ull = pull --ff-only
+	url = "!git fa && git pull --ff-only --rebase"
 	ush = push
 	wd = rev-parse --show-toplevel
 	wip = "!git add --all :/ && git commit --message 'WIP'"
