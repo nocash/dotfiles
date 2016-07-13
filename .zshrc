@@ -314,12 +314,42 @@ $(prompt_git_info)
 %# '
 
 ###############################################################################
+##  Docker  ###################################################################
+###############################################################################
+
+autoload -U add-zsh-hook
+load-docker-machine-env() {
+  if [[ -f .docker-machine && -r .docker-machine ]]; then
+    docker_machine="$(<.docker-machine)"
+    echo "Configuring environment for Docker machine \"${docker_machine}\"."
+    eval $(docker-machine env "${docker_machine}")
+  elif [[ -n $DOCKER_MACHINE_NAME ]]; then
+    echo "Unsetting Docker machine environment variables."
+    eval $(docker-machine env -u)
+  fi
+}
+add-zsh-hook chpwd load-docker-machine-env
+load-docker-machine-env
+
+###############################################################################
 ##  NVM  ######################################################################
 ###############################################################################
 
 export NVM_DIR="/Users/beau/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
 ###############################################################################
 ##  Additional Configuration  #################################################
