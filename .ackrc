@@ -1,9 +1,10 @@
 --pager=less --quit-if-one-screen --RAW-CONTROL-CHARS --chop-long-lines --no-init
 --smart-case
---type-set=sass=.scss,.sass
---type-set=markdown=.md,.markdown
 --type-set=coffee=.coffee
+--type-set=elixir=.exs
 --type-set=haml=.haml,.hamlc
+--type-set=markdown=.md,.markdown
+--type-set=sass=.scss,.sass
 --ignore-dir=bundle
 --ignore-dir=tmp/cache
 --ignore-dir=app/storage/*
