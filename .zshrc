@@ -266,34 +266,73 @@ if ( command -v hub >&- ) { function git(){ hub "$@"} }
 [[ "$PLATFORM" == 'osx' && -s $(brew --prefix)/etc/profile.d/autojump.sh ]] \
   && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# command-not-found hook
-command_not_found_handler() {
-  local g_alias cmd="$1"
+export GOPATH="$HOME/projects/go"
+
+###############################################################################
+##  Command Not Found Handler #################################################
+###############################################################################
+
+cnf_git_alias() {
+  local cmd
+  cmd="$1"
 
   # Execute a Git alias prefixed with 'g'.
+  local g_alias
   if [ 'g' = $cmd[1] ]; then
     g_alias=$cmd[2,-1]
-    git config --get "alias.$g_alias" &>/dev/null
-    if [ $? -eq 0 ]; then
+    if git config --get "alias.${g_alias}" &>/dev/null; then
       exec git $g_alias "${@[2,-1]}"
     fi
   fi
+}
 
+command_not_found_handler() {
+  cnf_git_alias $@
+
+  # If none of the above functions take control with "exec" then fail normally.
   return 127
 }
 
-# set our prompt options
-[[ -f "$HOME/.zshrc.prompt" ]] && . "$HOME/.zshrc.prompt"
+###############################################################################
+##  Prompt  ###################################################################
+###############################################################################
 
-export GOPATH="$HOME/projects/go"
+autoload -Uz promptinit && promptinit
+autoload -U colors && colors
+
+# Allow for functions in the prompt.
+setopt PROMPT_SUBST
+
+# Autoload zsh functions.
+fpath=(~/.zsh/functions $fpath)
+autoload -U ~/.zsh/functions/*(:t)
+
+# Set the prompt.
+PROMPT='
+%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}\
+$(prompt_git_info)
+%# '
+
+###############################################################################
+##  NVM  ######################################################################
+###############################################################################
 
 export NVM_DIR="/Users/beau/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Include machine-specifc configuration
+
+###############################################################################
+##  Additional Configuration  #################################################
+###############################################################################
+
 [[ -f "$HOME/.zshrc.$HOST" ]] && . "$HOME/.zshrc.$HOST"
 [[ -f "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
 
+###############################################################################
+###############################################################################
+###############################################################################
+
 # Run TMUX if tmux exists and we're not inside tmux.
-if ( command -v tmux >&- && [ -z "$TMUX" ] ) { tmux new }
-# if ( command -v wemux >&- && [ -z "$TMUX" ] ) { wemux new }
+tmux_cmd="tmux"
+# tmux_cmd="wemux"
+if ( command -v $tmux_cmd >&- && [ -z "$TMUX" ] ) { $tmux_cmd new }
