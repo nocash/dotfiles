@@ -14,3 +14,4 @@ Thumbs.db
 dump.rdb
 npm-debug.log
 tags
+.docker-machine
