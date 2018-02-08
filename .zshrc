@@ -81,10 +81,6 @@ case "$PLATFORM" in
     alias ls='ls -G'
     # alias vim='mvim -v'
     alias vim='nvim'
-
-    # http://docs.basho.com/riak/latest/ops/tuning/open-files-limit/#Mac-OS-X
-    ulimit -n 65536
-    ulimit -u 2048
     ;;
   *)
     VISUAL=gvim
@@ -100,6 +96,7 @@ alias cx='chmod +x'
 alias grep='egrep'
 alias htop='sudo htop'
 alias ll='ls -lh'
+alias nr='npm run'
 alias tree='tree -C'
 
 ## Aliases: Git
@@ -251,10 +248,13 @@ fi
 
 # Add sbin to PATH
 PATH="$PATH:/usr/local/sbin"
+
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
-# Add RVM to PATH for scripting
-PATH=$PATH:$HOME/.rvm/bin
+
+# # Add RVM to PATH for scripting
+# PATH=$PATH:$HOME/.rvm/bin
+
 # Add Android SDK tools to PATH
 PATH="$PATH:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools"
 export PATH ANDROID_HOME=$HOME/Library/Android/sdk
@@ -333,6 +333,9 @@ load-docker-machine-env() {
     docker_machine="$(<.docker-machine)"
     echo "Configuring environment for Docker machine \"${docker_machine}\"."
     eval $(docker-machine env "${docker_machine}")
+    export DOCKER_MACHINE_DIR=$(pwd)
+  elif [[ $(pwd) == ${DOCKER_MACHINE_DIR}* ]]; then
+      # Do nothing if we move to a subdirectory or if NVM_RC_DIR hasn't been set.
   elif [[ -n $DOCKER_MACHINE_NAME ]]; then
     echo "Unsetting Docker machine environment variables."
     eval $(docker-machine env -u)
@@ -353,6 +356,9 @@ autoload -U add-zsh-hook
 load-nvmrc() {
   if [[ -f .nvmrc && -r .nvmrc ]]; then
     nvm use
+    export NVM_RC_DIR=$(pwd)
+  elif [[ $(pwd) == ${NVM_RC_DIR}* ]]; then
+    # Do nothing if we move to a subdirectory or if NVM_RC_DIR hasn't been set.
   elif [[ $(nvm version) != $(nvm version default)  ]]; then
     echo "Reverting to nvm default version"
     nvm use default
@@ -360,6 +366,11 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# direnv
+if command -v direnv > /dev/null; then
+  eval "$(direnv hook zsh)"
+fi
 
 ###############################################################################
 ##  Additional Configuration  #################################################

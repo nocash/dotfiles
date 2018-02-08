@@ -2,6 +2,7 @@
 [alias]
 	a = add
 	aa = add --all
+	ai = add --interactive
 	an = add --intent-to-add
 	ann = add --all --intent-to-add
 	ap = add --patch
@@ -9,12 +10,12 @@
 	bb = bisect bad
 	bg = bisect good
 	br = branch
+	br- = "!f() { git branch $(dasherize \"$@\"); }; f"
 	brb = branch-branch # custom script
 	brc = "!git branch | cut -c3-"
 	brddp = "!git branch | cut -c3- | pick | xargs git branch -D"
 	brdp = "!git branch | cut -c3- | pick | xargs git branch --delete"
-	bs = bisect start HEAD
-	bx = bisect skip
+	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
 	ci = commit --verbose
@@ -24,6 +25,8 @@
 	cim = commit --message
 	cin = commit --no-edit
 	co = checkout
+	cob = checkout -b
+	cob- = "!f() { git checkout -b $(dasherize \"$@\"); }; f"
 	cop = "!git branch | cut -c3- | pick | xargs git checkout"
 	copb = "!git checkout `pbpaste`"
 	copr = "!git branch --remote | cut -c3- | grep -v HEAD | sed -e's%^origin/%%' | pick | xargs git checkout"
@@ -38,9 +41,12 @@
 	dns = diff --name-status
 	fa = fetch --all --prune
 	fd = clean --force -d
+	first = "!git add --all :/ && git commit --allow-empty --message 'initial commit'"
 	fix = commit --amend --reuse-message=HEAD
 	fixa = commit --amend --reuse-message=HEAD --all
+	fixaa = commit --amend --reuse-message=HEAD --all --no-verify
 	fixo = commit --amend --reuse-message=HEAD --only
+	fmm = "!f() { git fetch origin ${1:-master}:${1:-master}; }; f"
 	foh = push --force-with-lease origin HEAD
 	h = help
 	l = log --graph --oneline --decorate
@@ -53,6 +59,7 @@
 	lo = log --oneline --decorate
 	log = log
 	m = merge --no-edit
+	ma = merge --abort
 	mb = "!f() { git merge-base $1 HEAD; }; f"
 	mbm = "!git merge-base $( git which-master ) HEAD"
 	mff = merge --ff-only
@@ -62,7 +69,7 @@
 	mote = remote
 	mt = mergetool
 	mv = mv
-	noskip = "!git ls-files -v | awk '/^S/{ print $2 }' | xargs git update-index --no-skip-worktree"
+	noskip = "!git skips | xargs git update-index --no-skip-worktree"
 	osh = push --set-upstream origin HEAD
 	ra = rebase --abort
 	rb = rebase
@@ -70,9 +77,9 @@
 	rc = rebase --continue
 	re = reset
 	ref = reflog
-	rew = commit --amend --only --allow-empty
-	rh = "!git stash --include-untracked && git reset --hard"
-	rho = "!git stash --include-untracked >/dev/null && git reset --hard HEAD@{u}"
+	rew = commit --no-verify --amend --only --allow-empty
+	rh = "!git stash save --include-untracked 'reset --hard backup' && git reset --hard"
+	rho = "!git stash save --include-untracked 'reset --hard backup' && git reset --hard @{u}"
 	rhof = "!git fa && git rho"
 	ri = rebase --interactive
 	ri3 = rebase --interactive HEAD~3
@@ -86,6 +93,7 @@
 	sho = show --name-only --format=""
 	shs = show --name-status
 	skip = update-index --skip-worktree
+	skips = "!git ls-files -v | awk '/^S/{ print $2 }'"
 	ss = status
 	st = stash
 	stk = stash --keep-index
@@ -96,12 +104,12 @@
 	url = "!git fa && git pull --ff-only --rebase"
 	ush = push
 	wd = rev-parse --show-toplevel
-	wip = "!git add --all :/ && git commit --message 'WIP'"
+	wip = "!git add --all :/ && git commit --no-verify --message 'WIP'"
 [color]
 	ui = auto
 [core]
 	autocrlf = input
-	editor = vim
+	editor = "mvim -v"
 	eol = lf
 	excludesfile = ~/.gitignore
 [diff]
@@ -109,12 +117,16 @@
 	guitool = gvimdiff
 [difftool]
 	prompt = false
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
 	tool = vimdiff
 	guitool = gvimdiff
 [mergetool]
 	keepbackup = false
 	prompt = false
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
 [user]
 	name = Beau Dacious
 	email = dacious.beau@gmail.com
