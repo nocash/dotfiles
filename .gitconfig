@@ -58,6 +58,7 @@
 	lll = log --graph --oneline --decorate --all
 	lo = log --oneline --decorate
 	log = log
+	lu = log --graph --oneline --decorate HEAD @{u}
 	m = merge --no-edit
 	ma = merge --abort
 	mb = "!f() { git merge-base $1 HEAD; }; f"
@@ -71,6 +72,7 @@
 	mv = mv
 	noskip = "!git skips | xargs git update-index --no-skip-worktree"
 	osh = push --set-upstream origin HEAD
+	pop = stash pop
 	ra = rebase --abort
 	rb = rebase
 	rbo = rebase --onto
@@ -109,12 +111,14 @@
 	ui = auto
 [core]
 	autocrlf = input
-	editor = "mvim -v"
+	# editor = "mvim -v"
+	editor = "vim"
 	eol = lf
 	excludesfile = ~/.gitignore
 [diff]
 	tool = vimdiff
 	guitool = gvimdiff
+	wsErrorHighlight = old,new
 [difftool]
 	prompt = false
 [difftool "vscode"]
