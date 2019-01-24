@@ -31,27 +31,27 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-# eval "$(dircolors -b)"
-[[ $PLATFORM = 'linux' ]] && eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
+# zstyle ':completion:*' auto-description 'specify: %d'
+# zstyle ':completion:*' completer _expand _complete _correct _approximate
+# zstyle ':completion:*' format 'Completing %d'
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*' menu select=2
+# # eval "$(dircolors -b)"
+# [[ $PLATFORM = 'linux' ]] && eval "$(dircolors -b)"
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*' list-colors ''
+# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+# zstyle ':completion:*' menu select=long
+# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+# zstyle ':completion:*' use-compctl false
+# zstyle ':completion:*' verbose true
+#
+# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+# zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-# temporary workaroud for https://github.com/mxcl/homebrew/issues/16992
-zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
+# temporary workaround for https://github.com/mxcl/homebrew/issues/16992
+# zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
 
 # Disable XON/XOFF flow control
 stty -ixon
@@ -71,16 +71,16 @@ EDITOR=vim
 # Set less options
 export LESS="-FRSX --jump-target=.5"
 
-# compdef
-compdef g=git
-
 # OS-specific settings
 case "$PLATFORM" in
   'osx')
-    VISUAL="emacs"
+    VISUAL="mvim"
     alias ls='ls -G'
-    # alias vim='mvim -v'
-    alias vim='nvim'
+    alias vim='mvim -v'
+
+    # http://docs.basho.com/riak/latest/ops/tuning/open-files-limit/#Mac-OS-X
+    # ulimit -n 65536
+    # ulimit -u 2048
     ;;
   *)
     VISUAL=gvim
@@ -100,6 +100,7 @@ alias nr='npm run'
 alias tree='tree -C'
 
 ## Aliases: Git
+compdef g=git
 alias -g ocb='origin/`g cb`'
 alias g='git'
 
@@ -145,8 +146,6 @@ alias ag='ag --pager=less\ --quit-if-one-screen\ --RAW-CONTROL-CHARS\ --chop-lon
 alias chx='chmod +x'
 alias chxx='chmod +x !$'
 alias grake='rake -g'
-alias la='localeapp'
-alias marked='open -a "Marked 2"'
 alias start='noglob start'
 
 alias ec='emacsclient -c -n'
@@ -162,11 +161,9 @@ alias mqr='rm $(upsearch .mergeq)/.mergeq/merging'
 alias pbc='pbcopy'
 alias pbp='pbpaste'
 
-alias zc='zeus c'
-alias zg='zeus g'
-alias zr='zeus rspec'
-alias zrk='zeus rake'
-alias zs='script/zeus'
+# https://remysharp.com/2018/08/23/cli-improved
+if hash bat 2> /dev/null; then alias cat='bat'; fi
+if hash prettyping 2>/dev/null; then alias ping='prettyping -nolegend'; fi
 
 function ffind() {
   find . -name "$@"
@@ -188,16 +185,7 @@ function mergeq() {
 }
 
 function punch() {
-  mkdir -p $1:h
-  touch $1
-}
-
-function ole() {
-  local script_path="$( git rev-parse --show-toplevel )/bin/open_last_error"
-  if [ ! -f "$script_path" ]; then
-    script_path="$HOME/bin/open-last-error"
-  fi
-  "$script_path" "$@"
+  mkdir -p $1:h && touch $1
 }
 
 function op() {
@@ -222,6 +210,7 @@ function zeus () {
 # Miscellaneous functions
 function -(){ cd - }
 function checkopt() { echo $options[$1] }
+function hgrep { fc -l -m "*${@}*" -10000 } # man zshbuiltins
 function inline { xargs echo -n }
 function lc { tr '[:upper:]' '[:lower:]' < <(echo -n "$@") }
 function rr { stty sane }
@@ -248,16 +237,15 @@ fi
 
 # Add sbin to PATH
 PATH="$PATH:/usr/local/sbin"
-
 # Add Vagrant to PATH
 [[ -s '/opt/vagrant/bin/vagrant' ]] && export PATH="$PATH:/opt/vagrant/bin"
 
-# # Add RVM to PATH for scripting
-# PATH=$PATH:$HOME/.rvm/bin
-
-# Add Android SDK tools to PATH
-PATH="$PATH:$HOME/Library/Android/sdk/tools:$HOME/Library/Android/sdk/platform-tools"
-export PATH ANDROID_HOME=$HOME/Library/Android/sdk
+function kgrep() {
+  local karma_path="node_modules/karma/bin/karma"
+  local karma_conf="spec/unit/karma.conf.coffee"
+  local pattern="$@"
+  $karma_path run $karma_conf -- --grep="${pattern}"
+}
 
 # Check for hub and wrap git if it's available.
 if ( command -v hub >&- ) { function git(){ hub "$@"} }
@@ -345,32 +333,16 @@ add-zsh-hook chpwd load-docker-machine-env
 load-docker-machine-env
 
 ###############################################################################
-##  NVM  ######################################################################
-###############################################################################
 
-export NVM_DIR="/Users/beau/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  if [[ -f .nvmrc && -r .nvmrc ]]; then
-    nvm use
-    export NVM_RC_DIR=$(pwd)
-  elif [[ $(pwd) == ${NVM_RC_DIR}* ]]; then
-    # Do nothing if we move to a subdirectory or if NVM_RC_DIR hasn't been set.
-  elif [[ $(nvm version) != $(nvm version default)  ]]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+# android development
+export ANDROID_HOME="${HOME}/Library/Android/sdk/"
 
 # direnv
-if command -v direnv > /dev/null; then
-  eval "$(direnv hook zsh)"
-fi
+eval "$(direnv hook zsh)"
+
+# asdf
+. "${HOME}/.asdf/asdf.sh"
+. "${HOME}/.asdf/completions/asdf.bash"
 
 ###############################################################################
 ##  Additional Configuration  #################################################
@@ -383,7 +355,14 @@ fi
 ###############################################################################
 ###############################################################################
 
-# Run TMUX if tmux exists and we're not inside tmux.
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+# [[ -f /Users/beau/projects/hello-epics/functions/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/beau/projects/hello-epics/functions/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+# [[ -f /Users/beau/projects/hello-epics/functions/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/beau/projects/hello-epics/functions/node_modules/tabtab/.completions/sls.zsh
+
+# Run TMUX if 1) shell is interactive 2) tmux is not already running 3) tmux command exists.
 tmux_cmd="tmux"
 # tmux_cmd="wemux"
-if ( command -v $tmux_cmd >&- && [ -z "$TMUX" ] ) { $tmux_cmd new }
+if ( [[ "$-" = *"i"* ]] && [ -z "$TMUX" ] && command -v $tmux_cmd >&- ) { $tmux_cmd new }
