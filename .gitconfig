@@ -13,6 +13,8 @@
 	br- = "!f() { git branch $(dasherize \"$@\"); }; f"
 	brb = branch-branch # custom script
 	brc = "!git branch | cut -c3-"
+	brd = branch --delete
+	brdd = branch --delete --force
 	brddp = "!git branch | cut -c3- | pick | xargs git branch -D"
 	brdp = "!git branch | cut -c3- | pick | xargs git branch --delete"
 	bs = bisect skip
