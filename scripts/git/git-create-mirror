@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git clone --bare . $2
+git remote add --mirror=push $1 $2
+git config --bool remote.$1.skipDefaultUpdate true
+git mirror

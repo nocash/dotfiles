@@ -1,0 +1,5 @@
+#!/bin/bash
+
+git config --global --list \
+  | awk -F'[.=]' '/^alias/ { print $2 }' \
+  | while read -r alias; do command -v "g${alias}"; done

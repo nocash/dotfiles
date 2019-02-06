@@ -1,0 +1,10 @@
+#!/bin/bash
+# Shows the commits that are unique to your branch compared to master. Useful
+# for finding commits made before a merge that is now cluttering your log with
+# another branch's history.
+
+# Use the first argument as the merge base or use master if not specified. Uses
+# `which-master` to choose between master and origin/master for the merge base.
+merge_base="${1:-$( git which-master )}"
+
+git log --oneline --no-merges --first-parent ${merge_base}..

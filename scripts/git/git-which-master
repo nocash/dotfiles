@@ -1,0 +1,19 @@
+#!/bin/bash
+# Outputs "origin/master" if origin/master is a valid branch and ahead of
+# master, otherwise outputs "master" if master if a valid branch, otherwise
+# outputs nothing.
+
+if git show-ref --verify --quiet refs/remotes/origin/master; then
+  commits_ahead=$( git rev-list master..origin/master | wc -l )
+  if [ "$commits_ahead" -gt 0 ]; then
+    echo 'origin/master'
+    exit 0
+  fi
+fi
+
+if git show-ref --verify --quiet refs/heads/master; then
+  echo 'master'
+  exit 0
+fi
+
+exit 1

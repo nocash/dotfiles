@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+ack_args=$@
+git_ref=$( git which-master )
+pattern='TODO|NOTE|XXX|placehold\.it|TK|tbd|console\.log'
+
+function committed_files {
+  git diff ${git_ref}..HEAD --diff-filter=ACMX -G"$pattern" --name-only
+}
+
+function uncommitted_files {
+  git ls-files -mo --exclude-standard
+}
+
+( committed_files ; uncommitted_files ) \
+  | sort -u \
+  | xargs ack --with-filename $ack_args "$pattern"

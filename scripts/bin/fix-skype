@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SKYPE_DIR="$HOME/Library/Application Support/Skype/"
+
+# http://community.skype.com/t5/Mac/a-Message-u-have-another-copy-of-skype-running-how-to-solve/m-p/1445603/highlight/true#M52446
+rm "$SKYPE_DIR/shared.lck"
+rm "$SKYPE_DIR/Skype.pid"
+
+find "$SKYPE_DIR" \( -name '*-journal' -o -name '*.lock' -o -name 'temp-*' \) -delete

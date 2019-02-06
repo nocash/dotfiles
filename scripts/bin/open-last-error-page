@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+open "`ls -t error_pages/*.html | head -n1`"

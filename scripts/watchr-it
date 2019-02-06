@@ -1,0 +1,4 @@
+#!/bin/bash
+
+filepath=$1
+watchr -e "watch('(app|spec)/.*') { system 'zeus rspec $1' }"

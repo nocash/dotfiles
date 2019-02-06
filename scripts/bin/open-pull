@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+PR_FILE='./BRANCH_PULL_REQUEST'
+
+function parse_remote_url {
+  remote_url=$( git config --get remote.origin.url )
+  repo=$( basename "$remote_url" .git )
+
+  user=$( dirname "$remote_url" )
+  user=$( echo "$user" | awk -F'[:/]' '{ print $NF }' )
+
+  echo "${user}/${repo}"
+}
+
+function parse_upstream {
+  upstream=$( git rev-parse --abbrev-ref --symbolic-full-name @{upstream} 2>&- )
+  echo "${upstream#origin/}"
+}
+
+if [ -s $PR_FILE ]; then
+  pull_request_url=$( cat "$PR_FILE" )
+else
+  repo=$( parse_remote_url )
+  branch=$( parse_upstream )
+
+  if [ -z "$branch" ]; then
+    echo "Could not determine upstream branch."
+    exit 1
+  fi
+
+  pull_request_url="https://github.com/${repo}/compare/${branch}?expand=1"
+fi
+
+open "$pull_request_url"

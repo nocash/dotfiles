@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require "#{File.dirname(__FILE__)}/config/environment"
+puts I18n.t(ARGV[0])

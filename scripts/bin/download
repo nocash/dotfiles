@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# Download a file:
+#   download http://fake.com/file.zip
+#
+# Download multiple files:
+#   download http://fake.com/file1.zip http://fake.com/file2.zip
+#
+# Download file(s) to a directory:
+#   download http://fake.com/file.zip /tmp/
+#   download http://fake.com/file1.zip http://fake.com/file2.zip .
+
+require 'uri'
+
+# Checks if a path looks like a URL.
+def is_url?( path )
+  path =~ URI::ABS_URI
+end
+
+# Checks if a path is a valid directory.
+def is_directory?( path )
+  path = File.expand_path( path )
+  File.directory?( path )
+end
+
+# Collect URLs from the command line.
+urls = []
+ARGV.each { |arg| urls.push( arg ) if is_url?( arg ) }
+
+# Set download directory. Default to '~/Downloads' if one is not specified.
+directory = "#{ENV['HOME']}/Downloads"
+directory = ARGV.last if is_directory?( ARGV.last )
+
+# Build the command.
+command = 'curl --insecure --continue-at - --location'
+urls.each { |url| command << " --remote-name '#{url}'" }
+
+# Change to the download directory and execute command.
+Dir.chdir( directory ) do
+  system command
+end

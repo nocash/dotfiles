@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+filepath=$1
+
+basename=$( basename "$filepath" )
+dir=$( dirname "$filepath" )
+sha=$( shasum $filepath | awk '{ print $1 }' )
+
+ext=${basename#*.}
+sans=${basename%%.*}
+
+shapath="${dir}/${sans}-${sha}.${ext}"
+
+cp -v $filepath $shapath

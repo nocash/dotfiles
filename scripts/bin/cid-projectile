@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Add .projectile to the .gitignore file in your home directory before using
+# this script. The .projectile files should not be committed or added to the
+# project .gitignore file.
+
+for f in                                        \
+  acceptance-tests                              \
+  booking                                       \
+  booking-site                                  \
+  chef                                          \
+  cms                                           \
+  hotel-api                                     \
+  provider-adapter                              \
+  workers                                       \
+; do
+  touch "$f/.projectile"
+done

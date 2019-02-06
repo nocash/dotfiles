@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+current=`git symbolic-ref --quiet --short HEAD`
+exclude="^(master|develop)"
+
+git fetch origin
+git checkout master
+git reset --hard origin/master
+git branch --merged origin/master \
+  | cut -c3-                      \
+  | egrep -v "$exclude"           \
+  | xargs git branch --delete
+
+git checkout "$current"

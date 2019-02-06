@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo -n "$@"                   \
+  | tr '[:upper:]' '[:lower:]' \
+  | tr '_' ' '                 \
+  | tr -d '[:punct:]'          \
+  | tr -s '[:space:]' '-'

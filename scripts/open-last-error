@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+error_loc="$1"
+error_ext="$2"
+
+error_path="$error_loc"
+if [ -n "$error_ext" ]; then
+  error_path="${error_path}/*.${error_ext}"
+fi
+
+open "$(ls -t ${error_path} | head -n1)"
