@@ -1,0 +1,63 @@
+{
+    "git.autofetch": true,
+    "window.zoomLevel": 0,
+    "editor.tabSize": 2,
+    "window.restoreWindows": "all",
+    "window.title": "${activeEditorMedium}${separator}${rootName}",
+    // "search.location": "panel",
+    "eslint.autoFixOnSave": true,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": true
+    },
+    "open-in-vim.openMethod": "macos.macvim",
+    "search.smartCase": true,
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+    /*** Ext: Git Project manager ***/
+    "gitProjectManager.baseProjectsFolders": [
+        "~",
+        "~/projects"
+    ],
+    "gitProjectManager.ignoredFolders": [
+        "node_modules"
+    ],
+    "gitProjectManager.maxDepthRecursion": 2,
+    "gitProjectManager.openInNewWindow": true,
+    "gitProjectManager.searchInsideProjects": false,
+    "gitlens.keymap": "chorded",
+    "gitlens.historyExplorer.enabled": true,
+    "files.insertFinalNewline": true,
+    "breadcrumbs.enabled": true,
+    "prettier.trailingComma": "es5",
+    "workbench.colorTheme": "Snazzy Light",
+    "workbench.statusBar.feedback.visible": false,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "editor.fontSize": 16,
+    "workbench.editor.showTabs": true,
+    "prettier.requireConfig": true,
+    "editor.formatOnSave": true,
+    "editor.hover.delay": 600,
+    "liveshare.featureSet": "insiders",
+    "workbench.sideBar.location": "left",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.gotoLocation.multiple": "goto",
+    "merge-conflict.diffViewPosition": "Below",
+    "terminal.integrated.shell.osx": "/bin/bash",
+    "typescript.experimental.useSeparateSyntaxServer": true,
+    "workbench.colorCustomizations": {},
+    "materialTheme.accent": "Remove accents",
+    "editor.quickSuggestionsDelay": 100
+}

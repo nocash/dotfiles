@@ -1,7 +1,7 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
-ack_args=$@
-git_ref=$( git which-master )
+git_ref=${1:-master}
+ack_args=${@:2}
 pattern='TODO|NOTE|XXX|placehold\.it|TK|tbd|console\.log'
 
 function committed_files {
@@ -14,4 +14,4 @@ function uncommitted_files {
 
 ( committed_files ; uncommitted_files ) \
   | sort -u \
-  | xargs ack --with-filename $ack_args "$pattern"
+  | xargs ag --heading $ack_args "$pattern"

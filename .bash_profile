@@ -1,4 +1,6 @@
-[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+# Load the default .profile
+[[ -r "$HOME/.profile" ]] && source "$HOME/.profile" 
 
-. /Users/beau/.asdf/asdf.sh
-. /Users/beau/.asdf/completions/asdf.bash
+# Load .bashrc if one exists.
+[[ -r "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+

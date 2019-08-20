@@ -69,7 +69,12 @@ fi
 EDITOR=vim
 
 # Set less options
-export LESS="-FRSX --jump-target=.5"
+export LESS="\
+  --quit-if-one-screen \
+  --RAW-CONTROL-CHARS \
+  --chop-long-lines \
+  --no-init \
+  --jump-target=.5"
 
 # OS-specific settings
 case "$PLATFORM" in
@@ -91,12 +96,9 @@ case "$PLATFORM" in
 esac
 
 ## Aliases: General
-alias be='bundle exec'
-alias cx='chmod +x'
 alias grep='egrep'
 alias htop='sudo htop'
 alias ll='ls -lh'
-alias nr='npm run'
 alias tree='tree -C'
 
 ## Aliases: Git
@@ -148,22 +150,12 @@ alias chxx='chmod +x !$'
 alias grake='rake -g'
 alias start='noglob start'
 
-alias ec='emacsclient -c -n'
-alias ee='emacsclient -n'
-alias et='emacsclient -c -t'
-
-alias mqc='git commit --no-edit; $(upsearch .mergeq)/script/mergeq --continue'
-alias mqe='mergeq edge'
-alias mqm='mergeq master'
-alias mqp='mergeq production'
-alias mqr='rm $(upsearch .mergeq)/.mergeq/merging'
-
 alias pbc='pbcopy'
 alias pbp='pbpaste'
 
 # https://remysharp.com/2018/08/23/cli-improved
-if hash bat 2> /dev/null; then alias cat='bat'; fi
-if hash prettyping 2>/dev/null; then alias ping='prettyping -nolegend'; fi
+if command -v bat &>/dev/null; then alias cat='bat'; fi
+if command -v prettyping &>/dev/null; then alias ping='prettyping -nolegend'; fi
 
 function ffind() {
   find . -name "$@"
@@ -172,16 +164,6 @@ alias ffind='noglob ffind'
 
 function px {
   ps aux | grep "$@"
-}
-
-function mergeq() {
-  local mqDir=$(upsearch script/mergeq)
-  [[ -z "$1" ]] && return 1
-  [[ -z "$mqDir" ]] && return 44
-
-  cd "$mqDir"
-  script/mergeq "$1"
-  cd -
 }
 
 function punch() {
@@ -194,17 +176,6 @@ function op() {
     script_path="$HOME/bin/open-pull-request"
   fi
   "$script_path" "$@"
-}
-
-# Restat Zeus after it crashes.
-function zeus () {
-  ARGS=$@
-  command zeus "$@"
-  ZE_EC=$?
-  stty sane
-  if [ $ZE_EC = 2 ]; then
-    zeus "$ARGS"
-  fi
 }
 
 # Miscellaneous functions
@@ -270,16 +241,35 @@ export GOPATH="$HOME/projects/go"
 #   co = checkout
 #
 # ...then typing "gco develop" executes "git checkout develop".
+
+## OLD:
+
+# cnf_git_alias() {
+#   local cmd
+#   cmd="$1"
+
+#   # Execute a Git alias prefixed with 'g'.
+#   local g_alias
+#   if [ 'g' = $cmd[1] ]; then
+#     g_alias=$cmd[2,-1]
+#     if git config --get "alias.${g_alias}" &>/dev/null; then
+#       exec git $g_alias "${@[2,-1]}"
+#     fi
+#   fi
+# }
+
+## Untested in zsh:
+
 cnf_git_alias() {
   local cmd
   cmd="$1"
 
   # Execute a Git alias prefixed with 'g'.
   local g_alias
-  if [ 'g' = $cmd[1] ]; then
-    g_alias=$cmd[2,-1]
+  if [ 'g' = "${cmd:0:1}" ]; then
+    g_alias="${cmd:1}"
     if git config --get "alias.${g_alias}" &>/dev/null; then
-      exec git $g_alias "${@[2,-1]}"
+      exec git $g_alias "${@:2}"
     fi
   fi
 }

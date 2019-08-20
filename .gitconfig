@@ -1,4 +1,38 @@
 # vim:noet:sts=2
+[color]
+	ui = auto
+[core]
+	autocrlf = input
+	editor = "vim"
+	eol = lf
+	excludesfile = ~/.gitignore
+[diff]
+	tool = vimdiff
+	guitool = vscode
+	wsErrorHighlight = old,new
+[difftool]
+	prompt = false
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+	tool = vimdiff
+	guitool = vscode
+[mergetool]
+	keepbackup = false
+	prompt = false
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+[user]
+	name = Beau Dacious
+	email = dacious.beau@gmail.com
+[github]
+	user = nocash
+[include]
+	path = .gitconfig.local
+[push]
+	default = simple
+[rerere]
+	enabled = true
 [alias]
 	a = add
 	aa = add --all
@@ -20,6 +54,7 @@
 	bs = bisect skip
 	cb = symbolic-ref --quiet --short HEAD
 	cf = commit --fixup
+	ch = cherry-pick
 	ci = commit --verbose
 	cia = commit --all --verbose
 	ciam = commit --all --verbose --message
@@ -32,7 +67,7 @@
 	cop = "!git branch | cut -c3- | pick | xargs git checkout"
 	copb = "!git checkout `pbpaste`"
 	copr = "!git branch --remote | cut -c3- | grep -v HEAD | sed -e's%^origin/%%' | pick | xargs git checkout"
-	cp = cherry-pick
+	cp = cherry-pick # also aliased as "ch" due to conflict with GNU cp when invoked using `gcp`
 	cs = commit --squash
 	d = diff
 	dc = diff --cached
@@ -75,6 +110,7 @@
 	noskip = "!git skips | xargs git update-index --no-skip-worktree"
 	osh = push --set-upstream origin HEAD
 	pop = stash pop
+	r = rm
 	ra = rebase --abort
 	rb = rebase
 	rbo = rebase --onto
@@ -107,40 +143,6 @@
 	ull = pull --ff-only
 	url = "!git fa && git pull --ff-only --rebase"
 	ush = push
+	v = mv
 	wd = rev-parse --show-toplevel
 	wip = "!git add --all :/ && git commit --no-verify --message 'WIP'"
-[color]
-	ui = auto
-[core]
-	autocrlf = input
-	# editor = "mvim -v"
-	editor = "vim"
-	eol = lf
-	excludesfile = ~/.gitignore
-[diff]
-	tool = vimdiff
-	guitool = gvimdiff
-	wsErrorHighlight = old,new
-[difftool]
-	prompt = false
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-[merge]
-	tool = vimdiff
-	guitool = gvimdiff
-[mergetool]
-	keepbackup = false
-	prompt = false
-[mergetool "vscode"]
-	cmd = code --wait $MERGED
-[user]
-	name = Beau Dacious
-	email = dacious.beau@gmail.com
-[github]
-	user = nocash
-[include]
-	path = .gitconfig.local
-[push]
-	default = simple
-[rerere]
-	enabled = true
